@@ -1,10 +1,10 @@
 create table tmp (
-    id INT,
-    year INT,
-    transmission VARCHAR(12),
-    seats INT,
-    status VARCHAR(11),
-    description TEXT
+	id INT,
+	year INT,
+	transmission VARCHAR(12),
+	seats INT,
+	status VARCHAR(11),
+	description TEXT
 );
 
 insert into tmp (id, year, transmission, seats, status, description) values (1, 1968, 'automaat', 1, 'broneeritud', 'ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris');
@@ -1007,4 +1007,3 @@ insert into tmp (id, year, transmission, seats, status, description) values (997
 insert into tmp (id, year, transmission, seats, status, description) values (998, 1994, 'manuaalne', 8, 'hoolduses', 'adipiscing elit proin risus praesent lectus vestibulum quam');
 insert into tmp (id, year, transmission, seats, status, description) values (999, 2007, 'manuaalne', 4, 'vaba', 'a libero nam dui proin leo odio porttitor');
 insert into tmp (id, year, transmission, seats, status, description) values (1000, 1969, 'poolautomaat', 8, 'broneeritud', 'eu interdum eu tincidunt in leo maecenas pulvinar lobortis');
---
