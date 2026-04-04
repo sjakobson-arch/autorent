@@ -12,7 +12,7 @@
     $paring = "SELECT * FROM cars WHERE id=".$id."";
     $valjund = mysqli_query($yhendus, $paring);
     $rida = mysqli_fetch_assoc($valjund);
-     print_r($rida);
+     //print_r($rida);
 ?>
         <div class="col">
             <h1><?php echo $rida["mark"]; ?> <?php echo $rida["model"]; ?></h1>
