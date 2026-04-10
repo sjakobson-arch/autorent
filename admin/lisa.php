@@ -15,15 +15,15 @@
         $description = $_GET['description'];
         $status = $_GET['status'];
 
-        $sql = "INSERT INTO cars ( mark, model, engine, fuel, price, image, year, transmission, seats, description, status) VALUES (NULL, '".$mark."', '".$model."', '".$engine."', '".$fuel."', '".$price."', '".$year."', '".$transmission."', '".$seats."', '".$description."', '".$status."')";
+        $sql = "INSERT INTO cars ( mark, model, engine, fuel, price, image, year, transmission, seats, description, status) VALUES ('".$mark."', '".$model."', '".$engine."', '".$fuel."', '".$price."', '".$year."', '".$transmission."', '".$seats."', '".$description."', '".$status."')";
 
         $valjund = mysqli_query($yhendus, $sql);
         $tulemus = mysqli_affected_rows($yhendus);
-        //  if ($tulemus ==1) {
-        //      echo "Kirje edukalt lisatud";
-        //  } else {
-        //      echo "Kirjet ei lisatud";
-        //  }
+          if ($tulemus ==1) {
+              echo "Kirje edukalt lisatud";
+          } else {
+              echo "Kirjet ei lisatud";
+        }
 
 
 
