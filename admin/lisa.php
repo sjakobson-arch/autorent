@@ -15,7 +15,7 @@
         $description = $_GET['description'];
         $status = $_GET['status'];
 
-        $sql = "INSERT INTO cars (id, mark, model, engine, fuel, price, image, year, transmission, seats, description, status) VALUES (NULL, '".$mark."', '". $model."', '". $engine."', '". $fuel."', '".$price."', '".$year."', '".$transmission."', '".$seats."', '".$description."', '". $status."', '".vaba."')";
+        $sql = "INSERT INTO cars (id, mark, model, engine, fuel, price, image, year, transmission, seats, description, status) VALUES (NULL, '".$mark."', '".$model."', '".$engine."', '".$fuel."', '".$price."', '".$year."', '".$transmission."', '".$seats."', '".$description."', '".$status."')";
 
     }
 ?>
