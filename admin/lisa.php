@@ -15,9 +15,8 @@
         $description = $_GET['description'];
         $status = $_GET['status'];
 
-
     }
-?
+?>
 
 <!-- sisu -->
 <div class="container">
