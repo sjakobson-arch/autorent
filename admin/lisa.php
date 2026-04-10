@@ -15,7 +15,19 @@
         $description = $_GET['description'];
         $status = $_GET['status'];
 
-        $sql = "INSERT INTO cars (id, mark, model, engine, fuel, price, image, year, transmission, seats, description, status) VALUES (NULL, '".$mark."', '".$model."', '".$engine."', '".$fuel."', '".$price."', '".$year."', '".$transmission."', '".$seats."', '".$description."', '".$status."')";
+        $sql = "INSERT INTO cars ( mark, model, engine, fuel, price, image, year, transmission, seats, description, status) VALUES (NULL, '".$mark."', '".$model."', '".$engine."', '".$fuel."', '".$price."', '".$year."', '".$transmission."', '".$seats."', '".$description."', '".$status."')";
+
+        $valjund = mysqli_query($yhendus, $sql);
+        $tulemus = mysqli_affected_rows($yhendus);
+         if ($tulemus ==1) {
+             echo "Kirje edukalt lisatud";
+         } else {
+             echo "Kirje ei lisatud";
+
+         }
+
+
+
 
     }
 ?>
@@ -58,8 +70,8 @@
                 <input type="text" class="form-control" id="status" name="status" value="vaba">
            </div>     
        </div>
-        <input type="submit" value="Salvesta" class="btn btn-success">
 
+       <input type="submit" value="Salvesta" class="btn btn-success">
 
     </form>
 </div>
