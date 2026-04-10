@@ -21,17 +21,16 @@
 
                 <label for="price" class="form-label">Price</label>
                 <input type="text" class="form-control" id="price" name="price">
-
-
-
             </div> 
-        </div>
-
+            <div class="col-sm-6">
+                
+       </div>
+        <input type="submit" value="Salvesta" class="btn btn-success">
 
 
     </form>
-
-
-
-
 </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  </body>
+</html>
