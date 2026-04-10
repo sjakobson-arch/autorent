@@ -19,12 +19,11 @@
 
         $valjund = mysqli_query($yhendus, $sql);
         $tulemus = mysqli_affected_rows($yhendus);
-         if ($tulemus ==1) {
-             echo "Kirje edukalt lisatud";
-         } else {
-             echo "Kirje ei lisatud";
-
-         }
+        //  if ($tulemus ==1) {
+        //      echo "Kirje edukalt lisatud";
+        //  } else {
+        //      echo "Kirjet ei lisatud";
+        //  }
 
 
 
