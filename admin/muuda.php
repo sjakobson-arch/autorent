@@ -39,14 +39,49 @@
             // print_r($paring);
 
     }
+
+     if(isset($_GET["updateid"])){
+        $id = $_GET["updateid"];
+        $mark = $_GET['mark'];
+        $model = $_GET['model'];
+        $engine = $_GET['engine'];
+        $fuel = $_GET['fuel'];
+        $price = $_GET['price'];
+
+        $year = $_GET['year'];
+        $transmission = $_GET['transmission'];
+        $seats = $_GET['seats'];
+        $description = $_GET['description'];
+        $status = $_GET['status'];
+
+        $paring = "UPDATE cars SET mark = '".$mark."', model = '".$model."' engine = '".$engine."', fuel = '".$fuel."', price = '".$price."', year = '".$year."', transmission = '".$transmission."', seats = '".$seats."', description = '".$description."', status = '".$status."' WHERE cars.id = ".$id."";
+
+        // print_r($paring);
+
+        $valjund = mysqli_query($yhendus, $paring);
+        $tulemus = mysqli_affected_rows($yhendus);
+        if ($tulemus ==1) {
+            header("Location: index.php?msg=uuendatud");
+        } else {
+            echo"Kirjet ei lisatud!";
+        }
+        
+
+    }
+// UPDATE cars SET model = 'Viper RT/10xxxx', engine = 'Dieselxxxxxxxx', fuel = 'hydrogenxxxxxxx', price = '1792', transmission = 'manualxxxxxxxx', description = 'Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.xxxxxxxx' WHERE cars.id = 15;
+
+
 ?>
 
 <!-- sisu -->
 <div class="container">
     <h2>Auto lisamine</h2>
-    <form action="lisa.php" method="get">
+    <form action="muuda.php" method="get">
         <div class="row g-4">
             <div class="col-sm-6">
+                <input type="hidden" name="updateid" value="<?= $rida['id']; ?>" >
+
+
                 <label for="mark" class="form-label">Mark</label>
                 <input type="text" class="form-control" id="mark" name="mark" value="<?= $rida['mark']; ?>" >
 
@@ -80,9 +115,7 @@
                 <input type="text" class="form-control" id="status" name="status" value="<?= $rida['status']; ?>">
            </div>     
        </div>
-       <div class="col-sm-6">
          <input type="submit" value="Salvesta" class="btn btn-success">
-       </div>
     </form>
 </div>
 
