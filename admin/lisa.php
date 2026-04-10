@@ -10,16 +10,16 @@
                 <label for="mark" class="form-label">Mark</label>
                 <input type="text" class="form-control" id="mark" name="mark">
 
-                <label for="model" class="form-label">Mark</label>
+                <label for="model" class="form-label">Model</label>
                 <input type="text" class="form-control" id="model" name="model">
 
-                <label for="engine" class="form-label">Mark</label>
+                <label for="engine" class="form-label">Engine</label>
                 <input type="text" class="form-control" id="engine" name="engine">
 
-                <label for="fuel" class="form-label">Mark</label>
+                <label for="fuel" class="form-label">Fuel</label>
                 <input type="text" class="form-control" id="fuel" name="fuel">
-                
-                <label for="price" class="form-label">Mark</label>
+
+                <label for="price" class="form-label">Price</label>
                 <input type="text" class="form-control" id="price" name="price">
 
 
