@@ -32,7 +32,7 @@
         <div class="row">
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
-              <form method="get" action="login.php">
+              <form method="post" action="login.php">
                 <div class="mb-3">
                     <label for="u" class="form-label">Username</label>
                     <input name="user" type="text"class="form-control" id="u">
