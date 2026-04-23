@@ -1,5 +1,6 @@
 <?php
     session_start();
+    include('../config.php');
 ?>
 <!doctype html>
 <html lang="en">
@@ -16,9 +17,15 @@
     if (!empty($_POST)) {
         $uname = $_POST['user'];
         $password = $_POST['password'];
-        $hash = '$2y$10$dgwQy4wd1TAmLtoYGSi2QeCnxoptLYA/u2s8x.SDdCXutqIhYHEUm';
 
-        if ($uname=="admin" && password_verify($password, $hash)) {
+        $paring = "SELECT user, password FROM users";
+        $valjund = mysqli_query($yhendus, $paring);
+        $rida = mysqli_fetch_assoc($valjund);
+        // var_dump($rida);
+
+        //$hash = '$2y$10$dgwQy4wd1TAmLtoYGSi2QeCnxoptLYA/u2s8x.SDdCXutqIhYHEUm';
+
+        if ($uname==$rida['user'] && password_verify($password, $hash)) {
             $_SESSION['tuvastamine'] = 'misiganes';
             header("Location: index.php");
         }else{
@@ -35,11 +42,11 @@
               <form method="post" action="login.php">
                 <div class="mb-3">
                     <label for="u" class="form-label">Username</label>
-                    <input name="user" type="text"class="form-control" id="u">
+                    <input name="user" type="text" class="form-control" id="u">
                 </div>
                 <div class="mb-3">
                     <label for="p" class="form-label">Password</label>
-                    <input name="password"type="password" class="form-control" id="p">
+                    <input name="password" type="password" class="form-control" id="p">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
              </form>
