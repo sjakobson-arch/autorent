@@ -16,7 +16,7 @@
         $hash = '$2y$10$dgwQy4wd1TAmLtoYGSi2QeCnxoptLYA/u2s8x.SDdCXutqIhYHEUm';
 
         if ($uname=="admin" && $password_verify($password, $hash)) {
-            echo "tere admin";
+            header("Location: index.php");
         }else{
             $msg = "kasutaja vale";
 
