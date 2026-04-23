@@ -18,7 +18,8 @@
         $uname = $_POST['user'];
         $password = $_POST['password'];
 
-        $paring = "SELECT user, password FROM users";
+        //kasutaja andmebaasist
+        $paring = "SELECT user, password FROM users WHERE user";
         $valjund = mysqli_query($yhendus, $paring);
         $rida = mysqli_fetch_assoc($valjund);
         // var_dump($rida);
