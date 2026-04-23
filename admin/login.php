@@ -13,6 +13,7 @@
     if (!empty($_GET)) {
         $uname = $_GET['user'];
         $password = $_GET['password'];
+        $hash = '$2y$10$dgwQy4wd1TAmLtoYGSi2QeCnxoptLYA/u2s8x.SDdCXutqIhYHEUm';
 
         if ($uname=="admin" && $password=="admin") {
             echo "tere admin";
@@ -21,7 +22,7 @@
 
         }    
     } 
-?>
+  ?>
   </body>
     <div class="container">
         <div class="row">
