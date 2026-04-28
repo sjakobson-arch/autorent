@@ -4,7 +4,7 @@
     $db_server = 'localhost';
     $db_andmebaas = 'autorent';
     $db_kasutaja = 'root';
-    $db_salasona = '';
+    $db_salasona = 'rootpass';
 
     // ühendus andmebaasiga
     $yhendus = mysqli_connect($db_server, $db_kasutaja, $db_salasona, $db_andmebaas);
