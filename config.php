@@ -1,7 +1,7 @@
 <?php
     // ***protseduuriline***
     // sinu andmed
-    $db_server = 'localhost';
+    $db_server = 'db';
     $db_andmebaas = 'autorent';
     $db_kasutaja = 'root';
     $db_salasona = 'rootpass';
