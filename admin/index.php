@@ -5,7 +5,9 @@ if (!isset($_SESSION['tuvastamine'])) {
   header('Location: login.php');
   exit();
   }
+
 ?>
+
 <?php include('../config.php'); ?>
 <?php include('../header.php'); ?>
 
@@ -16,15 +18,13 @@ if (!isset($_SESSION['tuvastamine'])) {
     <div class="row row-cols-1 row-cols-md-4 g-4">
 <!-- üks auto -->
 <?php
+    // sõnumi kuvamine
+    if(isset($_GET['msg'])){
+      echo '<div class="alert alert-success" role="alert"> Kõik on hästi! </div>';
+    }
 
-// sõnumi kuvamine
-if(isset($_GET['msg'])){
-  echo '<div class="alert alert-success" role="alert">
-           Andmed salvestatud ja lisatud, boss!
-        </div>';
-}
 
-// autode kuvamine 
+  //autode kuvamine
     $paring = "SELECT * FROM cars";
     if (!empty($_GET["otsi"])) {
         $otsing = $_GET["otsi"];
