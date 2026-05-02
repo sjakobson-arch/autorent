@@ -1,16 +1,12 @@
 <?php
-    // ***protseduuriline***
-    // sinu andmed
-    $db_server = 'localhost';
-    $db_andmebaas = 'autorent';
-    $db_kasutaja = 'root';
-    $db_salasona = 'pass';
+$server = "localhost";
+$kasutaja = "root";
+$parool = "";
+$andmebaas = "autorent";
 
-    // ühendus andmebaasiga
-    $yhendus = mysqli_connect($db_server, $db_kasutaja, $db_salasona, $db_andmebaas);
+$yhendus = new mysqli($server, $kasutaja, $parool, $andmebaas);
 
-    // ühenduse kontroll
-    if (!$yhendus) {
-        die('Ei saa ühendust andmebaasiga');
+if ($yhendus->connect_error) {
+    die("Andmebaasi ühendus ebaõnnestus: " . $yhendus->connect_error);
 }
 ?>
