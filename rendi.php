@@ -1,5 +1,7 @@
 <?php
-include '../config/db.php';
+
+<?php include ('../config.php');>
+
 session_start();
 
 $car_id = $_POST['car_id'];

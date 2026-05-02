@@ -1,6 +1,7 @@
 <?php
-include '../config/db.php';
-include 'partials/header.php';
+
+<?php include ('../config.php');>
+<?php include ('../header.php');>
 
 if ($_POST) {
     $name = $_POST['name'];
