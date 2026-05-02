@@ -1,7 +1,7 @@
 <?php
 
-<?php include ('../config.php');>
-<?php include ('../header.php');>
+<?php include ('config.php');>
+<?php include ('header.php');>
 
 if ($_POST) {
     $email = $_POST['email'];
