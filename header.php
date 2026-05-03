@@ -35,8 +35,9 @@
 
         <li class="nav-item">
             <span class="nav-link disabled">
-                Tere, <?php echo $_SESSION["username"]; ?>
+             Tere, <?php echo $_SESSION["first_name"]; ?>
             </span>
+
         </li>
 
         <li class="nav-item">
