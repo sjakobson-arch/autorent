@@ -63,18 +63,18 @@ include("header.php");
             <p><strong>Staatus:</strong> <?php echo $auto["status"]; ?></p>
 
             <?php if ($auto["status"] !== "vaba"): ?>
-                <div class="alert alert-warning">See auto ei ole hetkel saadaval.</div>
+                <div class="alert alert-warning">See auto puhkab.</div>
             <?php else: ?>
 
                 <?php if (isset($_SESSION["user_id"])): ?>
                     <form method="POST">
                         <button type="submit" name="rent" class="btn btn-success w-100">
-                            Rendi see auto
+                            Rendi see imeline auto
                         </button>
                     </form>
                 <?php else: ?>
                     <div class="alert alert-info">
-                        Rendiks pead olema sisse logitud.
+                        Rentimiseks pead olema sisse logitud.
                     </div>
                     <a href="login.php" class="btn btn-primary w-100">Logi sisse</a>
                 <?php endif; ?>
