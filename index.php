@@ -6,7 +6,7 @@
 
 <?php
     // ÕIGE tabeli nimi
-    $paring = "SELECT * FROM autod";
+    $paring = "SELECT * FROM cars";
 
     if (!empty($_GET["otsi"])) {
         $otsing = $_GET["otsi"];
