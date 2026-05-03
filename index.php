@@ -6,7 +6,7 @@
     <div class="row row-cols-1 row-cols-md-4 g-4">
 <!-- üks auto -->
 <?php
-    $paring = "SELECT * FROM cars";
+    $paring = "SELECT * FROM autorent";
     if (!empty($_GET["otsi"])) {
         $otsing = $_GET["otsi"];
         $paring .= " WHERE mark LIKE '%".$otsing."%'";
