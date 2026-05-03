@@ -8,7 +8,6 @@ $vead = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $username = trim($_POST["username"]);
     $email = trim($_POST["email"]);
     $password = $_POST["password"];
     $password2 = $_POST["password2"];
@@ -27,8 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // Loo uus kasutaja
             $hashed = password_hash($password, PASSWORD_DEFAULT);
 
-            $paring = "INSERT INTO users (username, email, password, role)
-                       VALUES ('$username', '$email', '$hashed', 'client')";
+           $paring = "INSERT INTO users (email, password, role)
+           VALUES ('$email', '$hashed', 'client')";
+
             mysqli_query($yhendus, $paring);
 
             header("Location: login.php");
