@@ -15,20 +15,36 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+     <?php session_start(); ?>
+
+<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+    <?php if (!isset($_SESSION["user_id"])): ?>
         <li class="nav-item">
-          <a class="nav-link active" href="index.php">Home</a>
+            <a class="nav-link" href="login.php">Logi sisse</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="registreeru.php">Registreeru</a>
         </li>
+
+    <?php else: ?>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="minu_rendid.php">Minu rendid</a>
         </li>
+
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+            <span class="nav-link disabled">
+                Tere, <?php echo $_SESSION["username"]; ?>
+            </span>
         </li>
-      </ul>
+
+        <li class="nav-item">
+            <a class="btn btn-danger ms-2" href="logout.php">Logi välja</a>
+        </li>
+    <?php endif; ?>
+
+</ul>
+
       <form class="d-flex" role="search" method="get" action="index.php">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="otsi">
         <button class="btn btn-outline-success" type="submit">Otsi</button>
