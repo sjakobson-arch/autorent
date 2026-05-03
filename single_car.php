@@ -51,19 +51,16 @@ include("header.php");
 
     <div class="row mt-4">
         <div class="col-md-6">
-            <img src="<?php echo $auto["image"]; ?>" class="img-fluid rounded">
+            <!-- Sama pildi loogika nagu avalehel -->
+            <img src="https://loremflickr.com/600/400/<?php echo str_replace(' ', '', $auto['mark']); ?>" 
+                 class="img-fluid rounded">
         </div>
 
         <div class="col-md-6">
-            <p><strong>Aasta:</strong> <?php echo $auto["year"]; ?></p>
             <p><strong>Mootor:</strong> <?php echo $auto["engine"]; ?></p>
             <p><strong>Kütus:</strong> <?php echo $auto["fuel"]; ?></p>
-            <p><strong>Käigukast:</strong> <?php echo $auto["transmission"]; ?></p>
-            <p><strong>Istekohti:</strong> <?php echo $auto["seats"]; ?></p>
             <p><strong>Hind:</strong> <?php echo $auto["price"]; ?> €/päev</p>
             <p><strong>Staatus:</strong> <?php echo $auto["status"]; ?></p>
-
-            <p class="mt-3"><?php echo $auto["description"]; ?></p>
 
             <?php if ($auto["status"] !== "vaba"): ?>
                 <div class="alert alert-warning">See auto ei ole hetkel saadaval.</div>
