@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 include("config.php");
 
@@ -15,19 +18,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $kasutaja = mysqli_fetch_assoc($valjund);
 
     if ($kasutaja) {
-        // Kontrollime parooli
-        if (password_verify($password, $kasutaja["password"])) {
 
-            // Salvestame sessiooni
+        // Kontrollime parooli password_hash vastu
+        if (password_verify($password, $kasutaja["password_hash"])) {
+
+            // Loome sessiooni
             $_SESSION["user_id"] = $kasutaja["id"];
-            $_SESSION["username"] = $kasutaja["username"];
             $_SESSION["role"] = $kasutaja["role"];
+            $_SESSION["first_name"] = $kasutaja["first_name"];
+            $_SESSION["last_name"] = $kasutaja["last_name"];
 
             header("Location: index.php");
             exit();
+
         } else {
             $vead = "Vale parool.";
         }
+
     } else {
         $vead = "Sellise emailiga kasutajat ei leitud.";
     }
