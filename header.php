@@ -34,7 +34,7 @@
         <button class="btn btn-outline-success" type="submit">Otsi</button>
       </form>
       <a href="login.php" class="ms-4 btn btn-danger">Logi sisse</a>
-      <a href="logout.php" class="ms-4 btn btn-danger">Logi välja</a>
+      <a href="registreeru.php" class="ms-4 btn btn-danger">Registreeru</a>
     </div>
   </div>
 </nav>
