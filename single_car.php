@@ -50,7 +50,8 @@ if (isset($_POST["rent"])) {
 
         // Lisa broneering
         $paring = "INSERT INTO reservations (user_id, car_id, start_date, end_date, status)
-                   VALUES ($user_id, $car_id, '$start_date', '$end_date', 'active')";
+                   VALUES ($user_id, $car_id, '$start_date', '$end_date', 'confirmed')";
+
         mysqli_query($yhendus, $paring);
 
         header("Location: minu_rendid.php");
