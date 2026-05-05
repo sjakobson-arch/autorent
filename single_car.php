@@ -19,7 +19,7 @@ if (!$car) {
     exit;
 }
 
-// Võtame kõik broneeritud perioodid
+// Võtame kõik broneeritud perioodid (kalendri jaoks)
 $bookings_q = mysqli_query($yhendus, "
     SELECT start_date, end_date 
     FROM reservations 
@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <!-- Pilt vasakul -->
         <div class="col-md-6 mb-3">
-            <img src="/autorent/<?php echo htmlspecialchars($car["image"]); ?>"
+            <img src="<?php echo htmlspecialchars($car["image"]); ?>"
                  alt="<?php echo htmlspecialchars($car["mark"] . ' ' . $car["model"]); ?>"
                  class="img-fluid rounded shadow-sm"
                  style="max-width: 100%; height: auto;">
@@ -140,6 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 let disabledRanges = <?php echo json_encode($disabled); ?>;
 
 function isDisabled(date) {
+    if (!date) return false;
     let d = new Date(date);
     for (let r of disabledRanges) {
         let start = new Date(r.start);
