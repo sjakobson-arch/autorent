@@ -54,15 +54,16 @@ $broneeringud_tuhistatud = mysqli_fetch_assoc(mysqli_query($yhendus, "SELECT COU
 
     </div>
 
-    <!-- GRAAFIK -->
-    <div class="row mb-5">
-        <div class="col-md-6">
-            <div class="card shadow-sm p-3">
-                <h4 class="text-center mb-3">Broneeringute jaotus</h4>
-                <canvas id="broneeringuGraafik" height="200"></canvas>
-            </div>
+    <!-- GRAAFIK – väiksem ja nuppude all -->
+    <div class="row mt-4">
+     <div class="col-md-4">
+        <div class="card shadow-sm p-3">
+            <h5 class="text-center mb-3">Broneeringute jaotus</h5>
+            <canvas id="broneeringuGraafik" height="120"></canvas>
         </div>
+     </div>
     </div>
+
 
     <!-- HALDUSKAARDID -->
     <div class="row">
