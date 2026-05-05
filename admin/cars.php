@@ -3,8 +3,24 @@ include("admin_check.php");
 include("../config.php");
 include("../header.php");
 
-// Võtame kõik autod
-$paring = "SELECT * FROM cars ORDER BY id DESC";
+// Mitu rida korraga
+$per_page = 50;
+
+// Praegune leht
+$page = isset($_GET["page"]) ? max(1, intval($_GET["page"])) : 1;
+
+// Mitme rea vahele jätmine
+$start = ($page - 1) * $per_page;
+
+// Kokku autode arv
+$total_query = mysqli_query($yhendus, "SELECT COUNT(*) AS total FROM cars");
+$total_rows = mysqli_fetch_assoc($total_query)["total"];
+
+// Lehekülgede arv
+$total_pages = ceil($total_rows / $per_page);
+
+// Võtame 50 rida
+$paring = "SELECT * FROM cars ORDER BY id DESC LIMIT $start, $per_page";
 $valjund = mysqli_query($yhendus, $paring);
 ?>
 
@@ -45,6 +61,33 @@ $valjund = mysqli_query($yhendus, $paring);
             <?php endwhile; ?>
         </tbody>
     </table>
+
+    <!-- PAGINATION -->
+    <nav>
+        <ul class="pagination">
+
+            <!-- Eelmine -->
+            <li class="page-item <?php if ($page <= 1) echo 'disabled'; ?>">
+                <a class="page-link" href="?page=<?php echo $page - 1; ?>">Eelmine</a>
+            </li>
+
+            <!-- Lehekülje numbrid -->
+            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                <li class="page-item <?php if ($i == $page) echo 'active'; ?>">
+                    <a class="page-link" href="?page=<?php echo $i; ?>">
+                        <?php echo $i; ?>
+                    </a>
+                </li>
+            <?php endfor; ?>
+
+            <!-- Järgmine -->
+            <li class="page-item <?php if ($page >= $total_pages) echo 'disabled'; ?>">
+                <a class="page-link" href="?page=<?php echo $page + 1; ?>">Järgmine</a>
+            </li>
+
+        </ul>
+    </nav>
+
 </div>
 
 </body>
