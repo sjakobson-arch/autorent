@@ -30,55 +30,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $start = $_POST["start_date"];
     $end = $_POST["end_date"];
 
-    // Kontrollime kattuvaid broneeringuid
-    $check = mysqli_prepare($yhendus, "
-        SELECT id FROM reservations
-        WHERE car_id = ?
-        AND status != 'cancelled'
-        AND (
-            (start_date <= ? AND end_date >= ?) OR
-            (start_date <= ? AND end_date >= ?) OR
-            (? <= start_date AND ? >= end_date)
-        )
-    ");
+    // Arvutame päevad
+    $start_dt = new DateTime($start);
+    $end_dt = new DateTime($end);
+    $days = $start_dt->diff($end_dt)->days;
 
-    mysqli_stmt_bind_param($check, "isssssss",
-        $car_id, $start, $start, $end, $end, $start, $end
-    );
-
-    mysqli_stmt_execute($check);
-    $result = mysqli_stmt_get_result($check);
-
-    if (mysqli_num_rows($result) > 0) {
-        echo "<script>alert('See auto on valitud perioodil juba broneeritud.');</script>";
+    if ($days < 1) {
+        echo "<script>alert('Lõppkuupäev peab olema hilisem kui alguskuupäev.');</script>";
     } else {
 
-        // Arvutame hinna
-        $start_dt = new DateTime($start);
-        $end_dt = new DateTime($end);
-        $days = $start_dt->diff($end_dt)->days;
+        $total_price = $days * $car["price"];
 
-        if ($days < 1) {
-            echo "<script>alert('Lõppkuupäev peab olema hilisem kui alguskuupäev.');</script>";
-        } else {
+        // Salvestame broneeringu
+        $stmt = mysqli_prepare($yhendus, "
+            INSERT INTO reservations (user_id, car_id, start_date, end_date, total_price, status)
+            VALUES (?, ?, ?, ?, ?, 'pending')
+        ");
 
-            $total_price = $days * $car["price"];
+        mysqli_stmt_bind_param($stmt, "iissd",
+            $_SESSION["user_id"], $car_id, $start, $end, $total_price
+        );
 
-            // Salvestame broneeringu
-            $stmt = mysqli_prepare($yhendus, "
-                INSERT INTO reservations (user_id, car_id, start_date, end_date, total_price, status)
-                VALUES (?, ?, ?, ?, ?, 'pending')
-            ");
+        mysqli_stmt_execute($stmt);
 
-            mysqli_stmt_bind_param($stmt, "iissd",
-                $_SESSION["user_id"], $car_id, $start, $end, $total_price
-            );
-
-            mysqli_stmt_execute($stmt);
-
-            echo "<script>alert('Broneering loodud!'); window.location='my_rentals.php';</script>";
-            exit;
-        }
+        echo "<script>alert('Broneering loodud!'); window.location='my_rentals.php';</script>";
+        exit;
     }
 }
 ?>
@@ -106,10 +82,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <button class="btn btn-primary mt-3">Broneeri</button>
     </form>
-
-    <a href="availability.php?car_id=<?php echo $car_id; ?>" class="btn btn-outline-secondary mt-3">
-        Vaata saadavust kalendris
-    </a>
 </div>
 
 </body>
