@@ -68,11 +68,11 @@ $valjund = mysqli_query($yhendus, $paring);
                     </td>
                     <td>
                         <?php if ($r["status"] !== "confirmed"): ?>
-                            <a href="reservation_confirm.php?id=<?php echo $r['id']; ?>" class="btn btn-success btn-sm">Kinnita</a>
+                            <a href="reservations_confirm.php?id=<?php echo $r['id']; ?>" class="btn btn-success btn-sm">Kinnita</a>
                         <?php endif; ?>
 
                         <?php if ($r["status"] !== "cancelled"): ?>
-                            <a href="reservation_cancel.php?id=<?php echo $r['id']; ?>" class="btn btn-danger btn-sm">Tühista</a>
+                            <a href="reservations_cancel.php?id=<?php echo $r['id']; ?>" class="btn btn-danger btn-sm">Tühista</a>
                         <?php endif; ?>
                     </td>
                 </tr>
@@ -84,21 +84,16 @@ $valjund = mysqli_query($yhendus, $paring);
     <nav>
         <ul class="pagination">
 
-            <!-- Eelmine -->
             <li class="page-item <?php if ($page <= 1) echo 'disabled'; ?>">
                 <a class="page-link" href="?page=<?php echo $page - 1; ?>">Eelmine</a>
             </li>
 
-            <!-- Lehekülje numbrid -->
             <?php for ($i = 1; $i <= $total_pages; $i++): ?>
                 <li class="page-item <?php if ($i == $page) echo 'active'; ?>">
-                    <a class="page-link" href="?page=<?php echo $i; ?>">
-                        <?php echo $i; ?>
-                    </a>
+                    <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
                 </li>
             <?php endfor; ?>
 
-            <!-- Järgmine -->
             <li class="page-item <?php if ($page >= $total_pages) echo 'disabled'; ?>">
                 <a class="page-link" href="?page=<?php echo $page + 1; ?>">Järgmine</a>
             </li>
