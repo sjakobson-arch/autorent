@@ -1,3 +1,5 @@
+include("admin_protect.php");
+
 <?php
 
 session_start();

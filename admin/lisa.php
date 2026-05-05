@@ -1,3 +1,6 @@
+include("admin_protect.php");
+
+
 <?php
 include("admin_check.php");
 include("../config.php");
