@@ -1,3 +1,5 @@
+<?php include("admin_check.php"); ?>
+
 <?php include('../config.php'); ?>
 <?php
     if (!empty($_GET['delid'])) {

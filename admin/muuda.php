@@ -1,3 +1,5 @@
+<?php include("admin_check.php"); ?>
+
 <?php include('../config.php'); ?>
 <?php include('../header.php'); ?>
 
