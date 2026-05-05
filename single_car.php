@@ -19,6 +19,21 @@ if (!$car) {
     exit;
 }
 
+// Võtame kõik broneeritud perioodid
+$bookings_q = mysqli_query($yhendus, "
+    SELECT start_date, end_date 
+    FROM reservations 
+    WHERE car_id = $car_id AND status != 'cancelled'
+");
+
+$disabled = [];
+while ($b = mysqli_fetch_assoc($bookings_q)) {
+    $disabled[] = [
+        "start" => $b["start_date"],
+        "end"   => $b["end_date"]
+    ];
+}
+
 // Kui vorm saadeti
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -42,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         )
     ");
 
-    mysqli_stmt_bind_param($check, "isssssss",
+    mysqli_stmt_bind_param($check, "issssss",
         $car_id, $start, $start, $end, $end, $start, $end
     );
 
@@ -88,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <!-- Pilt vasakul -->
         <div class="col-md-6 mb-3">
-            <img src="<?php echo htmlspecialchars($car["image"]); ?>"
+            <img src="/autorent/<?php echo htmlspecialchars($car["image"]); ?>"
                  alt="<?php echo htmlspecialchars($car["mark"] . ' ' . $car["model"]); ?>"
                  class="img-fluid rounded shadow-sm"
                  style="max-width: 100%; height: auto;">
@@ -109,10 +124,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <form method="POST">
 
                 <label>Alguskuupäev:</label>
-                <input type="date" name="start_date" class="form-control" required>
+                <input type="date" id="start" name="start_date" class="form-control" required>
 
                 <label class="mt-2">Lõppkuupäev:</label>
-                <input type="date" name="end_date" class="form-control" required>
+                <input type="date" id="end" name="end_date" class="form-control" required>
 
                 <button class="btn btn-primary mt-3 w-100">Broneeri</button>
             </form>
@@ -120,6 +135,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     </div>
 </div>
+
+<script>
+let disabledRanges = <?php echo json_encode($disabled); ?>;
+
+function isDisabled(date) {
+    let d = new Date(date);
+    for (let r of disabledRanges) {
+        let start = new Date(r.start);
+        let end = new Date(r.end);
+        if (d >= start && d <= end) return true;
+    }
+    return false;
+}
+
+document.getElementById("start").addEventListener("input", function() {
+    if (isDisabled(this.value)) {
+        alert("Sellel kuupäeval on auto juba broneeritud.");
+        this.value = "";
+    }
+});
+
+document.getElementById("end").addEventListener("input", function() {
+    if (isDisabled(this.value)) {
+        alert("Sellel kuupäeval on auto juba broneeritud.");
+        this.value = "";
+    }
+});
+</script>
 
 </body>
 </html>
