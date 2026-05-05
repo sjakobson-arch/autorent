@@ -23,8 +23,8 @@ if (!$car) {
 
 // TURVALINE: võtame kõik broneeritud perioodid
 $stmt2 = mysqli_prepare($yhendus, "
-    SELECT start_date, end_date 
-    FROM reservations 
+    SELECT start_date, end_date
+    FROM reservations
     WHERE car_id = ? AND status != 'cancelled'
 ");
 mysqli_stmt_bind_param($stmt2, "i", $car_id);
@@ -63,7 +63,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     ");
 
     mysqli_stmt_bind_param($check, "issssss",
-        $car_id, $start, $start, $end, $end, $start, $end
+        $car_id,
+        $start, $start,
+        $end, $end,
+        $start, $end
     );
 
     mysqli_stmt_execute($check);
@@ -83,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $total_price = $days * $car["price"];
 
-            // Salvestame broneeringu (juba turvaline)
+            // TURVALINE: salvestame broneeringu
             $stmt3 = mysqli_prepare($yhendus, "
                 INSERT INTO reservations (user_id, car_id, start_date, end_date, total_price, status)
                 VALUES (?, ?, ?, ?, ?, 'pending')
@@ -101,3 +104,75 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 ?>
+
+<div class="container mt-5">
+    <div class="row">
+
+        <!-- Pilt vasakul (loremflickr nagu index.php-s) -->
+        <div class="col-md-6 mb-3">
+            <img src="https://loremflickr.com/600/400/<?php echo str_replace(' ', '', $car['mark']); ?>"
+                 alt="<?php echo htmlspecialchars($car["mark"] . ' ' . $car["model"]); ?>"
+                 class="img-fluid rounded shadow-sm">
+        </div>
+
+        <!-- Info + kalender paremal -->
+        <div class="col-md-6">
+            <h2><?php echo htmlspecialchars($car["mark"] . " " . $car["model"]); ?></h2>
+
+            <p><strong>Mootor:</strong> <?php echo htmlspecialchars($car["engine"]); ?></p>
+            <p><strong>Kütus:</strong> <?php echo htmlspecialchars($car["fuel"]); ?></p>
+            <p><strong>Hind päevas:</strong> <?php echo htmlspecialchars($car["price"]); ?> €</p>
+
+            <!-- Auto staatus -->
+            <p><strong>Staatus:</strong> <?php echo htmlspecialchars($car["status"]); ?></p>
+
+            <hr>
+
+            <h4>Broneeri see auto</h4>
+
+            <form method="POST">
+
+                <label>Alguskuupäev:</label>
+                <input type="date" id="start" name="start_date" class="form-control" required>
+
+                <label class="mt-2">Lõppkuupäev:</label>
+                <input type="date" id="end" name="end_date" class="form-control" required>
+
+                <button class="btn btn-primary mt-3 w-100">Broneeri</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<script>
+let disabledRanges = <?php echo json_encode($disabled); ?>;
+
+function isDisabled(date) {
+    if (!date) return false;
+    let d = new Date(date);
+    for (let r of disabledRanges) {
+        let start = new Date(r.start);
+        let end = new Date(r.end);
+        if (d >= start && d <= end) return true;
+    }
+    return false;
+}
+
+document.getElementById("start").addEventListener("input", function() {
+    if (isDisabled(this.value)) {
+        alert("Sellel kuupäeval on auto juba broneeritud.");
+        this.value = "";
+    }
+});
+
+document.getElementById("end").addEventListener("input", function() {
+    if (isDisabled(this.value)) {
+        alert("Sellel kuupäeval on auto juba broneeritud.");
+        this.value = "";
+    }
+});
+</script>
+
+</body>
+</html>
