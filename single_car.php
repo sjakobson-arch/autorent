@@ -116,6 +116,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <p><strong>Kütus:</strong> <?php echo htmlspecialchars($car["fuel"]); ?></p>
             <p><strong>Hind päevas:</strong> <?php echo htmlspecialchars($car["price"]); ?> €</p>
 
+            <!-- ⭐ Auto staatus (tagasi lisatud) -->
+            <p><strong>Staatus:</strong> 
+                <?php echo htmlspecialchars($car["status"]); ?>
+            </p>
+
             <hr>
 
             <h4>Broneeri see auto</h4>
@@ -166,3 +171,4 @@ document.getElementById("end").addEventListener("input", function() {
 
 </body>
 </html>
+
