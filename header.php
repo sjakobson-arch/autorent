@@ -34,16 +34,17 @@ if (session_status() === PHP_SESSION_NONE) {
                 <?php endif; ?>
             </ul>
 
-            <!-- OTSING (AUTOCOMPLETE + PILTIDEGA) -->
+            <!-- OTSING (AUTOCOMPLETE + PILTIDEGA, ILMA VÄRVIMUUTUSETA) -->
             <form class="d-flex position-relative" method="GET" action="/autorent/index.php" autocomplete="off">
-                <input id="searchInput" 
-                       class="form-control" 
-                       type="search" 
-                       name="otsi" 
-                       placeholder="Otsi autot...">
+                <input id="searchInput"
+                       class="form-control"
+                       type="search"
+                       name="otsi"
+                       placeholder="Otsi autot..."
+                       style="background-color: white; color: black;">
 
-                <div id="searchResults" 
-                     class="list-group position-absolute w-100" 
+                <div id="searchResults"
+                     class="list-group position-absolute w-100"
                      style="top: 40px; z-index: 2000;"></div>
             </form>
 
