@@ -60,28 +60,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 ?>
 
 <div class="container mt-5">
-    <h2><?php echo $car["mark"] . " " . $car["model"]; ?></h2>
+    <div class="row">
 
-    <img src="<?php echo $car["image"]; ?>" class="img-fluid mb-3" style="max-width: 400px;">
+        <!-- Pilt vasakul -->
+        <div class="col-md-6 mb-3">
+            <img src="<?php echo htmlspecialchars($car["image"]); ?>"
+                 alt="<?php echo htmlspecialchars($car["mark"] . ' ' . $car["model"]); ?>"
+                 class="img-fluid"
+                 style="max-width: 100%; height: auto;">
+        </div>
 
-    <p><strong>Mootor:</strong> <?php echo $car["engine"]; ?></p>
-    <p><strong>Kütus:</strong> <?php echo $car["fuel"]; ?></p>
-    <p><strong>Hind päevas:</strong> <?php echo $car["price"]; ?> €</p>
+        <!-- Kirjeldus + kalender paremal -->
+        <div class="col-md-6">
+            <h2><?php echo htmlspecialchars($car["mark"] . " " . $car["model"]); ?></h2>
 
-    <hr>
+            <p><strong>Mootor:</strong> <?php echo htmlspecialchars($car["engine"]); ?></p>
+            <p><strong>Kütus:</strong> <?php echo htmlspecialchars($car["fuel"]); ?></p>
+            <p><strong>Hind päevas:</strong> <?php echo htmlspecialchars($car["price"]); ?> €</p>
 
-    <h4>Broneeri see auto</h4>
+            <hr>
 
-    <form method="POST">
+            <h4>Broneeri see auto</h4>
 
-        <label>Alguskuupäev:</label>
-        <input type="date" name="start_date" class="form-control" required>
+            <form method="POST">
 
-        <label class="mt-2">Lõppkuupäev:</label>
-        <input type="date" name="end_date" class="form-control" required>
+                <label>Alguskuupäev:</label>
+                <input type="date" name="start_date" class="form-control" required>
 
-        <button class="btn btn-primary mt-3">Broneeri</button>
-    </form>
+                <label class="mt-2">Lõppkuupäev:</label>
+                <input type="date" name="end_date" class="form-control" required>
+
+                <button class="btn btn-primary mt-3">Broneeri</button>
+            </form>
+        </div>
+
+    </div>
 </div>
 
 </body>
