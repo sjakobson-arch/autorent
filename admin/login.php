@@ -1,4 +1,3 @@
-include("admin_protect.php");
 
 <?php
 error_reporting(E_ALL);
@@ -6,6 +5,7 @@ ini_set('display_errors', 1);
 
 session_start();
 include("../config.php");
+include("admin_protect.php");
 
 $vead = "";
 
