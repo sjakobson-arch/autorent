@@ -54,19 +54,8 @@ $broneeringud_tuhistatud = mysqli_fetch_assoc(mysqli_query($yhendus, "SELECT COU
 
     </div>
 
-    <!-- GRAAFIK – väiksem ja nuppude all -->
-    <div class="row mt-4">
-     <div class="col-md-4">
-        <div class="card shadow-sm p-3">
-            <h5 class="text-center mb-3">Broneeringute jaotus</h5>
-            <canvas id="broneeringuGraafik" height="120"></canvas>
-        </div>
-     </div>
-    </div>
-
-
-    <!-- HALDUSKAARDID -->
-    <div class="row">
+    <!-- HALDUSKAARDID (ÜLEVAL) -->
+    <div class="row mb-4">
 
         <!-- Autode haldus -->
         <div class="col-md-4">
@@ -91,6 +80,17 @@ $broneeringud_tuhistatud = mysqli_fetch_assoc(mysqli_query($yhendus, "SELECT COU
         </div>
 
     </div>
+
+    <!-- GRAAFIK (ALL, VÄIKSEM) -->
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm p-3">
+                <h5 class="text-center mb-3">Broneeringute jaotus</h5>
+                <canvas id="broneeringuGraafik" height="120"></canvas>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <!-- Chart.js CDN -->
