@@ -3,27 +3,21 @@ include("admin_check.php");
 include("../config.php");
 include("../header.php");
 
-// Mitu rida korraga
+// Pagination
 $per_page = 50;
-
-// Praegune leht
 $page = isset($_GET["page"]) ? max(1, intval($_GET["page"])) : 1;
-
-// Mitme rea vahele jätmine
 $start = ($page - 1) * $per_page;
 
-// Kokku broneeringute arv
 $total_query = mysqli_query($yhendus, "SELECT COUNT(*) AS total FROM reservations");
 $total_rows = mysqli_fetch_assoc($total_query)["total"];
-
-// Lehekülgede arv
 $total_pages = ceil($total_rows / $per_page);
 
-// Võtame broneeringud koos kasutaja ja auto infoga
+// Võtame broneeringud koos auto hinnaga
 $paring = "
     SELECT r.*, 
            u.first_name, u.last_name, 
-           c.mark, c.model
+           c.mark, c.model, 
+           c.price AS price_per_day
     FROM reservations r
     JOIN users u ON r.user_id = u.id
     JOIN cars c ON r.car_id = c.id
@@ -58,7 +52,22 @@ $valjund = mysqli_query($yhendus, $paring);
                     <td><?php echo $r["mark"] . " " . $r["model"]; ?></td>
                     <td><?php echo $r["start_date"]; ?></td>
                     <td><?php echo $r["end_date"]; ?></td>
-                    <td><?php echo $r["total_price"]; ?> €</td>
+
+                    <td>
+                        <?php
+                            if (!empty($r["total_price"])) {
+                                echo number_format($r["total_price"], 2) . " €";
+                            } else {
+                                $start = new DateTime($r["start_date"]);
+                                $end = new DateTime($r["end_date"]);
+                                $paevad = $start->diff($end)->days;
+
+                                $hind = $paevad * $r["price_per_day"];
+                                echo number_format($hind, 2) . " €";
+                            }
+                        ?>
+                    </td>
+
                     <td>
                         <?php
                             if ($r["status"] === "pending") echo "<span class='badge bg-warning'>Ootel</span>";
@@ -66,6 +75,7 @@ $valjund = mysqli_query($yhendus, $paring);
                             if ($r["status"] === "cancelled") echo "<span class='badge bg-danger'>Tühistatud</span>";
                         ?>
                     </td>
+
                     <td>
                         <?php if ($r["status"] !== "confirmed"): ?>
                             <a href="reservations_confirm.php?id=<?php echo $r['id']; ?>" class="btn btn-success btn-sm">Kinnita</a>
@@ -80,10 +90,9 @@ $valjund = mysqli_query($yhendus, $paring);
         </tbody>
     </table>
 
-    <!-- PAGINATION -->
+    <!-- Pagination -->
     <nav>
         <ul class="pagination">
-
             <li class="page-item <?php if ($page <= 1) echo 'disabled'; ?>">
                 <a class="page-link" href="?page=<?php echo $page - 1; ?>">Eelmine</a>
             </li>
@@ -97,7 +106,6 @@ $valjund = mysqli_query($yhendus, $paring);
             <li class="page-item <?php if ($page >= $total_pages) echo 'disabled'; ?>">
                 <a class="page-link" href="?page=<?php echo $page + 1; ?>">Järgmine</a>
             </li>
-
         </ul>
     </nav>
 
@@ -105,3 +113,4 @@ $valjund = mysqli_query($yhendus, $paring);
 
 </body>
 </html>
+
