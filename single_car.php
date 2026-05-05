@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         mysqli_stmt_execute($stmt);
 
-        echo "<script>alert('Broneering loodud!'); window.location='my_rentals.php';</script>";
+        echo "<script>alert('Broneering loodud!'); window.location='minu_rendid.php';</script>";
         exit;
     }
 }
