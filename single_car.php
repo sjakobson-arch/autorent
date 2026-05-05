@@ -66,11 +66,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="col-md-6 mb-3">
             <img src="<?php echo htmlspecialchars($car["image"]); ?>"
                  alt="<?php echo htmlspecialchars($car["mark"] . ' ' . $car["model"]); ?>"
-                 class="img-fluid"
+                 class="img-fluid rounded shadow-sm"
                  style="max-width: 100%; height: auto;">
         </div>
 
-        <!-- Kirjeldus + kalender paremal -->
+        <!-- Info + kalender paremal -->
         <div class="col-md-6">
             <h2><?php echo htmlspecialchars($car["mark"] . " " . $car["model"]); ?></h2>
 
@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <label class="mt-2">Lõppkuupäev:</label>
                 <input type="date" name="end_date" class="form-control" required>
 
-                <button class="btn btn-primary mt-3">Broneeri</button>
+                <button class="btn btn-primary mt-3 w-100">Broneeri</button>
             </form>
         </div>
 
