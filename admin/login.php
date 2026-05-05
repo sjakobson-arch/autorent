@@ -1,67 +1,75 @@
-<?php 
-    session_start(); 
-    include('../config.php');
-?>
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  </head>
-  <body>
 <?php
-    $msg = "";
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-    if (!empty($_POST)) {
+session_start();
+include("../config.php");
 
-        //kasutaja vormist
-        $uname = $_POST['user'];
-        $password = $_POST['password'];
+$vead = "";
 
-        //kasutaja andmebaasist
-        $paring = "SELECT user, password FROM users WHERE user='".$uname."'";
-        print_r($paring);
-        $valjund = mysqli_query($yhendus, $paring);
-        $rida = mysqli_fetch_assoc($valjund);
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-        if (!empty($rida)) {
-            $hash = $rida['password'];
-            if ($uname== $rida['user'] && password_verify($password, $hash)) {
-                $_SESSION['tuvastamine'] = 'misiganes';
+    $email = trim($_POST["email"]);
+    $password = $_POST["password"];
+
+    // Otsime kasutajat emaili järgi
+    $paring = "SELECT * FROM users WHERE email='$email'";
+    $valjund = mysqli_query($yhendus, $paring);
+    $kasutaja = mysqli_fetch_assoc($valjund);
+
+    if ($kasutaja) {
+
+        // Kontrollime parooli
+        if (password_verify($password, $kasutaja["password_hash"])) {
+
+            // Kontrollime rolli
+            if ($kasutaja["role"] !== "admin") {
+                $vead = "Sul puudub ligipääs admini alale.";
+            } else {
+
+                // Loome sessiooni
+                $_SESSION["user_id"] = $kasutaja["id"];
+                $_SESSION["role"] = $kasutaja["role"];
+                $_SESSION["first_name"] = $kasutaja["first_name"];
+                $_SESSION["last_name"] = $kasutaja["last_name"];
+
                 header("Location: index.php");
-            }else{
-                $msg = "kasutaja vale";
+                exit();
             }
+
+        } else {
+            $vead = "Vale parool.";
         }
 
+    } else {
+        $vead = "Sellise emailiga kasutajat ei leitud.";
     }
-
+}
 ?>
-    <div class="container">
-        <div class="row pt-4 mt-4">
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4">
-                <form method="post" action="login.php" autocomplete="off">
-                    <div class="mb-3">
-                        <label for="u" class="form-label">Username</label>
-                        <input name="user" type="text" class="form-control" id="u">
-                    </div>
-                    <div class="mb-3">
-                        <label for="p" class="form-label">Password</label>
-                        <input name="password" type="password" class="form-control" id="p" >
-                    </div>
-                    <button type="submit" class="btn btn-primary">Logi sisse</button>
-                </form>
-                <?php echo $msg; ?>
-            </div>
-            <div class="col-sm-4"></div>
+
+<?php include("../header.php"); ?>
+
+<div class="container mt-5" style="max-width: 450px;">
+    <h2 class="mb-4">Admini sisselogimine</h2>
+
+    <?php if (!empty($vead)): ?>
+        <div class="alert alert-danger"><?php echo $vead; ?></div>
+    <?php endif; ?>
+
+    <form method="POST">
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" required>
         </div>
-    </div>
-  
 
+        <div class="mb-3">
+            <label class="form-label">Parool</label>
+            <input type="password" name="password" class="form-control" required>
+        </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-  </body>
+        <button type="submit" class="btn btn-primary w-100">Logi sisse</button>
+    </form>
+</div>
+
+</body>
 </html>
