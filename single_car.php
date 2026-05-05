@@ -19,7 +19,7 @@ if (!$car) {
     exit;
 }
 
-// Võtame kõik broneeritud perioodid (kalendri jaoks)
+// Võtame kõik broneeritud perioodid
 $bookings_q = mysqli_query($yhendus, "
     SELECT start_date, end_date 
     FROM reservations 
@@ -101,12 +101,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <div class="container mt-5">
     <div class="row">
 
-        <!-- Pilt vasakul -->
+        <!-- Pilt vasakul (loremflickr nagu index.php-s) -->
         <div class="col-md-6 mb-3">
-            <img src="<?php echo htmlspecialchars($car["image"]); ?>"
+            <img src="https://loremflickr.com/600/400/<?php echo str_replace(' ', '', $car['mark']); ?>"
                  alt="<?php echo htmlspecialchars($car["mark"] . ' ' . $car["model"]); ?>"
-                 class="img-fluid rounded shadow-sm"
-                 style="max-width: 100%; height: auto;">
+                 class="img-fluid rounded shadow-sm">
         </div>
 
         <!-- Info + kalender paremal -->
