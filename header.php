@@ -24,11 +24,12 @@ if (session_status() === PHP_SESSION_NONE) {
             <!-- Vasak pool -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                <?php if (isset($_SESSION["user_id"])): ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/autorent/my_rentals.php">Minu rendid</a>
-                    </li>
+                <?php if (isset($_SESSION["user_id"]) && $_SESSION["role"] !== "admin"): ?>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/autorent/my_rentals.php">Minu rendid</a>
+                  </li>
                 <?php endif; ?>
+
 
                 <?php if (isset($_SESSION["role"]) && $_SESSION["role"] === "admin"): ?>
                     <li class="nav-item">
