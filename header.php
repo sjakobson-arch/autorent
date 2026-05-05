@@ -13,14 +13,17 @@ if (session_status() === PHP_SESSION_NONE) {
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
     <div class="container">
 
         <a class="navbar-brand" href="/autorent/index.php">Autorent</a>
 
         <div class="collapse navbar-collapse">
 
+            <!-- Vasak pool -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
                 <?php if (isset($_SESSION["user_id"])): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="/autorent/my_rentals.php">Minu rendid</a>
@@ -32,9 +35,10 @@ if (session_status() === PHP_SESSION_NONE) {
                         <a class="nav-link" href="/autorent/admin/index.php">Admin</a>
                     </li>
                 <?php endif; ?>
+
             </ul>
 
-            <!-- OTSING (AUTOCOMPLETE + PILTIDEGA, ILMA VÄRVIMUUTUSETA) -->
+            <!-- OTSING (HELE, AUTOCOMPLETE + PILTIDEGA) -->
             <form class="d-flex position-relative" method="GET" action="/autorent/index.php" autocomplete="off">
                 <input id="searchInput"
                        class="form-control"
@@ -48,8 +52,9 @@ if (session_status() === PHP_SESSION_NONE) {
                      style="top: 40px; z-index: 2000;"></div>
             </form>
 
-            <!-- PAREM POOL -->
+            <!-- Parem pool -->
             <ul class="navbar-nav ms-3">
+
                 <?php if (isset($_SESSION["user_id"])): ?>
                     <li class="nav-item">
                         <span class="nav-link">Tere, <?php echo $_SESSION["first_name"]; ?></span>
@@ -62,6 +67,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         <a class="btn btn-success" href="/autorent/login.php">Logi sisse</a>
                     </li>
                 <?php endif; ?>
+
             </ul>
 
         </div>
