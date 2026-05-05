@@ -1,83 +1,59 @@
-<?php include("admin_check.php"); ?>
-
-<?php include('../config.php'); ?>
-<?php include('../header.php'); ?>
-
 <?php
-    if(!empty($_GET)){
-        $mark = $_GET['mark'];
-        $model = $_GET['model'];
-        $engine = $_GET['engine'];
-        $fuel = $_GET['fuel'];
-        $price = $_GET['price'];
+include("admin_check.php");
+include("../config.php");
+include("../header.php");
 
-        $year = $_GET['year'];
-        $transmission = $_GET['transmission'];
-        $seats = $_GET['seats'];
-        $description = $_GET['description'];
-        $status = $_GET['status'];
+$vead = "";
 
-       $sql = "INSERT INTO cars (mark, model, engine, fuel, price, year, transmission, seats, description, status) VALUES ('".$mark."', '".$model."', '".$engine."', '".$fuel."', '".$price."', '".$year."', '".$transmission."', '".$seats."', '".$description."', '".$status."')";
+if (isset($_POST["lisa"])) {
+    $mark = $_POST["mark"];
+    $model = $_POST["model"];
+    $engine = $_POST["engine"];
+    $fuel = $_POST["fuel"];
+    $price = $_POST["price"];
 
+    $paring = "INSERT INTO cars (mark, model, engine, fuel, price)
+               VALUES ('$mark', '$model', '$engine', '$fuel', '$price')";
 
-        $valjund = mysqli_query($yhendus, $sql);
-        $tulemus = mysqli_affected_rows($yhendus);
-          if ($tulemus ==1) {
-              header("Location: index.php?msg=lisatud");
-          } else {
-              echo "Kirjet ei lisatud";
-        }
+    mysqli_query($yhendus, $paring);
 
-
-
-
-    }
+    header("Location: cars.php");
+    exit();
+}
 ?>
 
-<!-- sisu -->
-<div class="container">
-    <h2>Auto lisamine</h2>
-    <form action="lisa.php" method="get">
-        <div class="row g-4">
-            <div class="col-sm-6">
-                <label for="mark" class="form-label">Mark</label>
-                <input type="text" class="form-control" id="mark" name="mark">
+<div class="container mt-5" style="max-width: 600px;">
+    <h2>Lisa uus auto</h2>
 
-                <label for="model" class="form-label">Model</label>
-                <input type="text" class="form-control" id="model" name="model">
+    <form method="POST">
+        <div class="mb-3">
+            <label>Mark</label>
+            <input type="text" name="mark" class="form-control" required>
+        </div>
 
-                <label for="engine" class="form-label">Mootor</label>
-                <input type="text" class="form-control" id="engine" name="engine">
+        <div class="mb-3">
+            <label>Mudel</label>
+            <input type="text" name="model" class="form-control" required>
+        </div>
 
-                <label for="fuel" class="form-label">Kütus</label>
-                <input type="text" class="form-control" id="fuel" name="fuel">
+        <div class="mb-3">
+            <label>Mootor</label>
+            <input type="text" name="engine" class="form-control" required>
+        </div>
 
-                <label for="price" class="form-label">Hind</label>
-                <input type="text" class="form-control" id="price" name="price">
-            </div> 
-            <div class="col-sm-6">
-                <label for="year" class="form-label">Aasta</label>
-                <input type="number" class="form-control" id="year" name="year" value="2000">
+        <div class="mb-3">
+            <label>Kütus</label>
+            <input type="text" name="fuel" class="form-control" required>
+        </div>
 
-                <label for="transmission" class="form-label">Käigukast</label>
-                <input type="text" class="form-control" id="transmission" name="transmission" value="automaat">
+        <div class="mb-3">
+            <label>Hind (€ / päev)</label>
+            <input type="number" name="price" class="form-control" required>
+        </div>
 
-                <label for="seats" class="form-label">Istmete arv</label>
-                <input type="number" class="form-control" id="seats" name="seats" value="5">
-
-                <label for="description" class="form-label">Muu info</label>
-                <input type="text" class="form-control" id="description" name="description" value="test">
-
-                <label for="status" class="form-label">Olek</label>
-                <input type="text" class="form-control" id="status" name="status" value="vaba">
-           </div>     
-       </div>
-
-       <input type="submit" value="Salvesta" class="btn btn-success">
-
+        <button type="submit" name="lisa" class="btn btn-success w-100">Lisa auto</button>
     </form>
 </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-  </body>
+</body>
 </html>
