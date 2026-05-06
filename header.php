@@ -12,8 +12,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
     <div class="container">
 
-        <!-- Avalehe link (absoluutne tee) -->
-        <a class="navbar-brand" href="/index.php">Autorent</a>
+        <!-- Avalehe link (suhteline tee, töötab igal pool) -->
+        <a class="navbar-brand" href="index.php">Autorent</a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
             <span class="navbar-toggler-icon"></span>
@@ -25,20 +25,20 @@
 
                 <?php if (isset($_SESSION["user_id"]) && ($_SESSION["role"] ?? "") !== "admin"): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="/minu_rendid.php">Minu rendid</a>
+                        <a class="nav-link" href="minu_rendid.php">Minu rendid</a>
                     </li>
                 <?php endif; ?>
 
                 <?php if (isset($_SESSION["role"]) && $_SESSION["role"] === "admin"): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/index.php">Admin</a>
+                        <a class="nav-link" href="admin/index.php">Admin</a>
                     </li>
                 <?php endif; ?>
 
             </ul>
 
             <!-- Otsing -->
-            <form class="d-flex position-relative me-3" method="GET" action="/index.php" autocomplete="off">
+            <form class="d-flex position-relative me-3" method="GET" action="index.php" autocomplete="off">
                 <input id="searchInput" class="form-control" type="search" name="otsi" placeholder="Otsi...">
                 <div id="searchResults" class="list-group position-absolute w-100" style="z-index: 1000;"></div>
             </form>
@@ -52,14 +52,14 @@
                         </span>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-outline-danger btn-sm" href="/logout.php">Logi välja</a>
+                        <a class="btn btn-outline-danger btn-sm" href="logout.php">Logi välja</a>
                     </li>
                 <?php else: ?>
                     <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary btn-sm" href="/login.php">Logi sisse</a>
+                        <a class="btn btn-outline-primary btn-sm" href="login.php">Logi sisse</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-primary btn-sm" href="/registreeru.php">Registreeru</a>
+                        <a class="btn btn-primary btn-sm" href="registreeru.php">Registreeru</a>
                     </li>
                 <?php endif; ?>
 
@@ -78,7 +78,7 @@ document.getElementById("searchInput").addEventListener("input", function() {
         return;
     }
 
-    fetch("/search_autocomplete.php?term=" + query)
+    fetch("search_autocomplete.php?term=" + query)
         .then(response => response.json())
         .then(data => {
             let results = document.getElementById("searchResults");
