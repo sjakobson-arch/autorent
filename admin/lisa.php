@@ -1,8 +1,13 @@
 <?php
 session_start();
 include("../config.php");
-include("../admin_protect.php");
 include("../header.php");
+
+// Ainult admin
+if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
+    header("Location: ../index.php");
+    exit;
+}
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -17,18 +22,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         INSERT INTO cars (mark, model, engine, fuel, price, status)
         VALUES (?, ?, ?, ?, ?, ?)
     ");
-    mysqli_stmt_bind_param($stmt, "ssssds",
-        $mark, $model, $engine, $fuel, $price, $status
-    );
+    mysqli_stmt_bind_param($stmt, "ssssds", $mark, $model, $engine, $fuel, $price, $status);
     mysqli_stmt_execute($stmt);
 
+    // ⭐ Pärast lisamist suuname tagasi tabelile
     header("Location: cars.php");
     exit;
 }
 ?>
 
 <div class="container mt-4">
-    <h1 class="mb-4">Lisa uus auto</h1>
+    <h2 class="mb-4">Lisa uus auto</h2>
 
     <form method="POST" class="card p-4 shadow-sm">
 
@@ -54,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="mb-3">
             <label class="form-label">Hind (€ / päev)</label>
-            <input type="number" name="price" class="form-control" step="0.01" required>
+            <input type="number" step="0.01" name="price" class="form-control" required>
         </div>
 
         <div class="mb-3">
@@ -65,7 +69,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </select>
         </div>
 
-        <button class="btn btn-success w-100">Lisa auto</button>
+        <button class="btn btn-primary w-100">Lisa auto</button>
+
     </form>
 </div>
 
