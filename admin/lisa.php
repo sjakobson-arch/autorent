@@ -1,8 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-?>
-<?php
 session_start();
 include("../config.php");
 include("admin_protect.php");
@@ -15,20 +11,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $engine = $_POST["engine"] ?? "";
     $fuel   = $_POST["fuel"]   ?? "";
     $price  = $_POST["price"]  ?? 0;
-
-    // Vastab andmebaasi väärtustele: 'vaba', 'hoolduses'
     $status = $_POST["status"] ?? "vaba";
+
+    // image veergu EI saadeta enam üldse
 
     $stmt = mysqli_prepare($yhendus, "
         INSERT INTO cars (mark, model, engine, fuel, price, status)
         VALUES (?, ?, ?, ?, ?, ?)
     ");
-    mysqli_stmt_bind_param($stmt, "ssssds", 
-        $mark, 
-        $model, 
-        $engine, 
-        $fuel, 
-        $price, 
+    mysqli_stmt_bind_param($stmt, "ssssds",
+        $mark,
+        $model,
+        $engine,
+        $fuel,
+        $price,
         $status
     );
 
