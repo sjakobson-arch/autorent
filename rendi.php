@@ -1,30 +1,34 @@
 <?php
-
-<?php include ('config.php');>
-
 session_start();
+include("config.php");
 
-$car_id = $_POST['car_id'];
-$start = $_POST['start'];
-$end = $_POST['end'];
-
-$stmt = $pdo->prepare("
-SELECT * FROM rents 
-WHERE car_id=? 
-AND (
-    (start_date <= ? AND end_date >= ?) OR
-    (start_date <= ? AND end_date >= ?) OR
-    (? <= start_date AND ? >= end_date)
-)
-");
-$stmt->execute([$car_id, $start, $start, $end, $end, $start, $end]);
-
-if ($stmt->rowCount() > 0) {
-    die("Auto on sellel perioodil juba broneeritud.");
+if (!isset($_SESSION["user_id"])) {
+    echo "<div class='container mt-4'><div class='alert alert-danger'>Palun logi sisse.</div></div>";
+    exit;
 }
 
-$stmt = $pdo->prepare("INSERT INTO rents (user_id, car_id, start_date, end_date) VALUES (?,?,?,?)");
-$stmt->execute([$_SESSION['user_id'], $car_id, $start, $end]);
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-header("Location: my_rents.php");
-exit;
+    $car_id = intval($_POST["car_id"]);
+    $user_id = $_SESSION["user_id"];
+    $start = $_POST["start_date"];
+    $end = $_POST["end_date"];
+    $price = $_POST["total_price"];
+
+    $stmt = mysqli_prepare($yhendus, "
+        INSERT INTO reservations (car_id, user_id, start_date, end_date, total_price, status)
+        VALUES (?, ?, ?, ?, ?, 'pending')
+    ");
+    mysqli_stmt_bind_param($stmt, "i ss sd", $car_id, $user_id, $start, $end, $price);
+    mysqli_stmt_execute($stmt);
+
+    echo "<div class='container mt-4'>
+            <div class='alert alert-success'>
+                Broneering salvestatud! Leiad selle lehelt <a href='minu_rendid.php'>Minu rendid</a>.
+            </div>
+          </div>";
+    exit;
+}
+
+echo "<div class='container mt-4'><div class='alert alert-danger'>Vigane päring.</div></div>";
+?>
