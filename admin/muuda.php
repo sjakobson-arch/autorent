@@ -1,8 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-?>
-<?php
 session_start();
 include("../config.php");
 include("admin_protect.php");
@@ -21,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $engine = $_POST["engine"] ?? "";
     $fuel   = $_POST["fuel"]   ?? "";
     $price  = $_POST["price"]  ?? 0;
-    $status = $_POST["status"] ?? "available";
+    $status = $_POST["status"] ?? "Saadaval";
 
     $stmt = mysqli_prepare($yhendus, "
         UPDATE cars
@@ -88,8 +84,12 @@ include("../header.php");
         <div class="mb-3">
             <label class="form-label">Staatus</label>
             <select name="status" class="form-select" required>
-                <option value="available"   <?php if ($car['status'] === 'available')   echo 'selected'; ?>>Saadaval</option>
-                <option value="unavailable" <?php if ($car['status'] === 'unavailable') echo 'selected'; ?>>Mitte saadaval</option>
+                <option value="Saadaval" <?php if ($car['status'] === 'Saadaval') echo 'selected'; ?>>
+                    Saadaval
+                </option>
+                <option value="Mitte saadaval" <?php if ($car['status'] === 'Mitte saadaval') echo 'selected'; ?>>
+                    Mitte saadaval
+                </option>
             </select>
         </div>
 
