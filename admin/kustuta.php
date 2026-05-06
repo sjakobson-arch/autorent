@@ -1,26 +1,20 @@
 <?php
 session_start();
 include("../config.php");
-include("../admin_protect.php");
-include("../header.php");
+include("admin_protect.php");
 
-if (!isset($_GET["id"])) {
-    echo "Auto ID puudub.";
-    exit;
-}
+$id = $_GET["id"] ?? null;
 
-$car_id = intval($_GET["id"]);
-
-// Kui kasutaja kinnitab kustutamise
-if (isset($_POST["confirm"])) {
-
+if ($id) {
     $stmt = mysqli_prepare($yhendus, "DELETE FROM cars WHERE id = ?");
-    mysqli_stmt_bind_param($stmt, "i", $car_id);
+    mysqli_stmt_bind_param($stmt, "i", $id);
     mysqli_stmt_execute($stmt);
-
-    header("Location: cars.php");
-    exit;
 }
+
+header("Location: cars.php");
+exit;
+
+
 ?>
 
 <div class="container mt-4">

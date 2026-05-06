@@ -1,22 +1,17 @@
 <?php
 session_start();
 include("../config.php");
-include("../header.php");
+include("admin_protect.php");
 
-// Ainult admin
-if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
-    header("Location: ../index.php");
-    exit;
-}
-
+// Kui vorm saadeti
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $mark = $_POST["mark"];
-    $model = $_POST["model"];
-    $engine = $_POST["engine"];
-    $fuel = $_POST["fuel"];
-    $price = $_POST["price"];
-    $status = $_POST["status"];
+    $mark   = $_POST["mark"]   ?? "";
+    $model  = $_POST["model"]  ?? "";
+    $engine = $_POST["engine"] ?? "";
+    $fuel   = $_POST["fuel"]   ?? "";
+    $price  = $_POST["price"]  ?? 0;
+    $status = $_POST["status"] ?? "available";
 
     $stmt = mysqli_prepare($yhendus, "
         INSERT INTO cars (mark, model, engine, fuel, price, status)
@@ -25,10 +20,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     mysqli_stmt_bind_param($stmt, "ssssds", $mark, $model, $engine, $fuel, $price, $status);
     mysqli_stmt_execute($stmt);
 
-    // ⭐ Pärast lisamist suuname tagasi tabelile
     header("Location: cars.php");
     exit;
 }
+
+include("../header.php");
 ?>
 
 <div class="container mt-4">
