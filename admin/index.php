@@ -6,7 +6,7 @@ include("../header.php");
 ?>
 
 <div class="container mt-4">
-    <h1 class="mb-4">Admini töölauale</h1>
+    <h1 class="mb-4">Admini töölaud</h1>
 
     <div class="row g-4">
 

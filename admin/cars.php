@@ -11,7 +11,7 @@ $paring = mysqli_query($yhendus, "SELECT * FROM cars");
 <div class="container mt-4">
     <h1 class="mb-4">Autode haldus</h1>
 
-    <a href="add_car.php" class="btn btn-success mb-3">Lisa uus auto</a>
+    <a href="lisa.php" class="btn btn-success mb-3">Lisa uus auto</a>
 
     <div class="table-responsive">
         <table class="table table-striped table-hover align-middle">
@@ -39,7 +39,6 @@ $paring = mysqli_query($yhendus, "SELECT * FROM cars");
                         <td><?php echo htmlspecialchars($r["status"]); ?></td>
                         <td>
                             <a href="muuda.php?id=<?php echo $r['id']; ?>" class="btn btn-sm btn-primary">Muuda</a>
-                            <a href="lisa.php?id=<?php echo $r['id']; ?>" class="btn btn-sm btn-primary">Lisa</a>
                             <a href="kustuta.php?id=<?php echo $r['id']; ?>" class="btn btn-sm btn-danger"
                                onclick="return confirm('Kas oled kindel, et soovid kustutada?');">
                                 Kustuta
