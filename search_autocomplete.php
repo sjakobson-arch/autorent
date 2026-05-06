@@ -3,25 +3,27 @@ include("config.php");
 
 $term = $_GET["term"] ?? "";
 
-$paring = mysqli_prepare($yhendus, "
-    SELECT mark, model, image 
-    FROM cars 
-    WHERE mark LIKE ? OR model LIKE ? 
-    LIMIT 10
-");
-
-$like = "%".$term."%";
-mysqli_stmt_bind_param($paring, "ss", $like, $like);
-mysqli_stmt_execute($paring);
-$result = mysqli_stmt_get_result($paring);
-
-$autod = [];
-
-while ($r = mysqli_fetch_assoc($result)) {
-    $autod[] = [
-        "name" => $r["mark"] . " " . $r["model"],
-        "image" => "/autorent/" . $r["image"]
-    ];
+if (strlen($term) < 1) {
+    echo json_encode([]);
+    exit;
 }
 
-echo json_encode($autod);
+$term = "%".$term."%";
+
+$stmt = mysqli_prepare($yhendus, "
+    SELECT CONCAT(mark, ' ', model) AS name
+    FROM cars
+    WHERE mark LIKE ? OR model LIKE ?
+    LIMIT 5
+");
+mysqli_stmt_bind_param($stmt, "ss", $term, $term);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+
+$names = [];
+while ($row = mysqli_fetch_assoc($result)) {
+    $names[] = $row["name"];
+}
+
+echo json_encode($names);
+exit;
