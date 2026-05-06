@@ -1,8 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-?>
-<?php
+
 session_start();
 include("../config.php");
 include("admin_protect.php");
@@ -11,7 +10,8 @@ include("../header.php");
 // Kõik broneeringud koos kasutaja ja auto infoga
 $query = "
     SELECT r.*, 
-           u.username AS user_name,
+           u.first_name,
+           u.last_name,
            c.mark AS car_mark,
            c.model AS car_model
     FROM reservations r
@@ -44,11 +44,21 @@ $result = mysqli_query($yhendus, $query);
         <?php while ($row = mysqli_fetch_assoc($result)): ?>
             <tr>
                 <td><?php echo $row["id"]; ?></td>
-                <td><?php echo htmlspecialchars($row["user_name"]); ?></td>
-                <td><?php echo htmlspecialchars($row["car_mark"] . " " . $row["car_model"]); ?></td>
+
+                <td>
+                    <?php echo htmlspecialchars($row["first_name"] . " " . $row["last_name"]); ?>
+                </td>
+
+                <td>
+                    <?php echo htmlspecialchars($row["car_mark"] . " " . $row["car_model"]); ?>
+                </td>
+
                 <td><?php echo $row["start_date"]; ?></td>
                 <td><?php echo $row["end_date"]; ?></td>
-                <td><?php echo $row["total_price"] ?? "—"; ?></td>
+
+                <td>
+                    <?php echo $row["total_price"] !== null ? $row["total_price"] : "—"; ?>
+                </td>
 
                 <td>
                     <?php if ($row["status"] === "confirmed"): ?>
