@@ -50,18 +50,13 @@ if (!$car) {
                     <input type="hidden" name="car_id" value="<?php echo $car['id']; ?>">
 
                     <div class="mb-3">
-                        <label class="form-label">Algus kuupäev</label>
+                        <label class="form-label">Algus</label>
                         <input type="date" name="start_date" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Lõpp kuupäev</label>
+                        <label class="form-label">Lõpp</label>
                         <input type="date" name="end_date" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Koguhind (€)</label>
-                        <input type="number" name="total_price" class="form-control" required>
                     </div>
 
                     <button class="btn btn-primary w-100">Rendi see auto</button>
