@@ -13,19 +13,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $price  = $_POST["price"]  ?? 0;
     $status = $_POST["status"] ?? "vaba";
 
-    // image veergu EI saadeta enam üldse
+    // Kuna andmebaasis on veerud 'image' ja 'year' mis võivad olla NOT NULL
+    $image = "";   // või "default.png"
+    $year  = 0;    // või date("Y")
 
     $stmt = mysqli_prepare($yhendus, "
-        INSERT INTO cars (mark, model, engine, fuel, price, status)
-        VALUES (?, ?, ?, ?, ?, ?)
+        INSERT INTO cars (mark, model, engine, fuel, price, status, image, year)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     ");
-    mysqli_stmt_bind_param($stmt, "ssssds",
+    mysqli_stmt_bind_param($stmt, "sssssssi",
         $mark,
         $model,
         $engine,
         $fuel,
         $price,
-        $status
+        $status,
+        $image,
+        $year
     );
 
     mysqli_stmt_execute($stmt);
