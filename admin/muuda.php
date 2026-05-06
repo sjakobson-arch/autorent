@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $engine = $_POST["engine"] ?? "";
     $fuel   = $_POST["fuel"]   ?? "";
     $price  = $_POST["price"]  ?? 0;
-    $status = $_POST["status"] ?? "Saadaval";
+    $status = $_POST["status"] ?? "vaba";
 
     $stmt = mysqli_prepare($yhendus, "
         UPDATE cars
@@ -84,11 +84,11 @@ include("../header.php");
         <div class="mb-3">
             <label class="form-label">Staatus</label>
             <select name="status" class="form-select" required>
-                <option value="Saadaval" <?php if ($car['status'] === 'Saadaval') echo 'selected'; ?>>
-                    Saadaval
+                <option value="vaba" <?php if ($car['status'] === 'vaba') echo 'selected'; ?>>
+                    vaba
                 </option>
-                <option value="Mitte saadaval" <?php if ($car['status'] === 'Mitte saadaval') echo 'selected'; ?>>
-                    Mitte saadaval
+                <option value="hoolduses" <?php if ($car['status'] === 'hoolduses') echo 'selected'; ?>>
+                    hoolduses
                 </option>
             </select>
         </div>

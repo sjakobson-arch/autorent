@@ -12,8 +12,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $fuel   = $_POST["fuel"]   ?? "";
     $price  = $_POST["price"]  ?? 0;
 
-    // NB! Kasutame samu väärtusi, mida andmebaas ootab (nt ENUM 'Saadaval','Mitte saadaval')
-    $status = $_POST["status"] ?? "Saadaval";
+    // Vastab andmebaasi väärtustele: 'vaba', 'hoolduses'
+    $status = $_POST["status"] ?? "vaba";
 
     $stmt = mysqli_prepare($yhendus, "
         INSERT INTO cars (mark, model, engine, fuel, price, status)
@@ -62,8 +62,8 @@ include("../header.php");
         <div class="mb-3">
             <label class="form-label">Staatus</label>
             <select name="status" class="form-select" required>
-                <option value="Saadaval">Saadaval</option>
-                <option value="Mitte saadaval">Mitte saadaval</option>
+                <option value="vaba">vaba</option>
+                <option value="hoolduses">hoolduses</option>
             </select>
         </div>
 
