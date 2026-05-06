@@ -1,51 +1,56 @@
-<?php include('config.php'); ?>
-<?php include('header.php'); ?>
+<?php
+session_start();
+include("config.php");
+include("header.php");
+
+// Võtame autod
+$paring = mysqli_query($yhendus, "SELECT * FROM cars");
+?>
 
 <div class="container">
-    <div class="row row-cols-1 row-cols-md-4 g-4">
+    <h1 class="mb-4">Meie autod</h1>
 
-<?php
-    // ÕIGE tabeli nimi
-    $paring = "SELECT * FROM cars";
+    <div class="row g-4">
 
-    if (!empty($_GET["otsi"])) {
-        $otsing = $_GET["otsi"];
-        $paring .= " WHERE mark LIKE '%".$otsing."%'";
-    } 
+        <?php while ($rida = mysqli_fetch_assoc($paring)): ?>
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
 
-    $paring .= " LIMIT 8";
+                    <img src="https://loremflickr.com/400/250/<?php echo str_replace(' ', '', $rida['mark']); ?>"
+                         class="card-img-top"
+                         alt="<?php echo htmlspecialchars($rida['mark'] . ' ' . $rida['model']); ?>">
 
-    $valjund = mysqli_query($yhendus, $paring);
+                    <div class="card-body d-flex flex-column">
 
-    while($rida = mysqli_fetch_assoc($valjund)){
-?>
-    <div class="col">
-        <div class="card">
-            <img src="https://loremflickr.com/400/250/<?php echo str_replace(" ","", $rida["mark"]); ?>" 
-                 class="card-img-top" 
-                 alt="<?php echo $rida["mark"]; ?>">
+                        <h5 class="card-title">
+                            <?php echo htmlspecialchars($rida['mark'] . ' ' . $rida['model']); ?>
+                        </h5>
 
-            <div class="card-body">
-                <h5 class="card-title">
-                    <?php echo $rida["mark"]; ?> <?php echo $rida["model"]; ?>
-                </h5>
+                        <p class="card-text mb-1">
+                            <strong>Mootor:</strong> <?php echo htmlspecialchars($rida['engine']); ?>
+                        </p>
 
-                <p class="card-text">
-                    Mootor: <?php echo $rida["engine"]; ?><br>
-                    Kütus: <?php echo $rida["fuel"]; ?><br>
-                    Hind: <?php echo $rida["price"]; ?> €/päev<br>
-                </p>
+                        <p class="card-text mb-1">
+                            <strong>Kütus:</strong> <?php echo htmlspecialchars($rida['fuel']); ?>
+                        </p>
 
-                <a href="single_car.php?id=<?php echo $rida["id"]; ?>" 
-                   class="btn btn-dark w-100">Rendi</a>
+                        <p class="card-text mb-2">
+                            <strong>Hind päevas:</strong> <?php echo htmlspecialchars($rida['price']); ?> €
+                        </p>
+
+                        <a href="single_car.php?id=<?php echo $rida['id']; ?>"
+                           class="btn btn-primary mt-auto">
+                            Vaata lähemalt
+                        </a>
+
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-<?php } ?>
+        <?php endwhile; ?>
 
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
