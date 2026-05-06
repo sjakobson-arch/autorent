@@ -3,7 +3,6 @@ session_start();
 include("../config.php");
 include("admin_protect.php");
 
-// Kui vorm saadeti
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $mark   = $_POST["mark"]   ?? "";
@@ -13,23 +12,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $price  = $_POST["price"]  ?? 0;
     $status = $_POST["status"] ?? "vaba";
 
-    // Kuna andmebaasis on veerud 'image' ja 'year' mis võivad olla NOT NULL
-    $image = "";   // või "default.png"
-    $year  = 0;    // või date("Y")
+    // Veerud, mis on NOT NULL, aga mida vorm ei küsi
+    $image        = "";
+    $year         = 0;
+    $transmission = "manual";
+    $seats        = 4;
+    $description  = "";
 
     $stmt = mysqli_prepare($yhendus, "
-        INSERT INTO cars (mark, model, engine, fuel, price, status, image, year)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO cars (mark, model, engine, fuel, price, image, year, transmission, seats, description, status)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ");
-    mysqli_stmt_bind_param($stmt, "sssssssi",
+
+    mysqli_stmt_bind_param(
+        $stmt,
+        "sssssisisss",
         $mark,
         $model,
         $engine,
         $fuel,
         $price,
-        $status,
         $image,
-        $year
+        $year,
+        $transmission,
+        $seats,
+        $description,
+        $status
     );
 
     mysqli_stmt_execute($stmt);
