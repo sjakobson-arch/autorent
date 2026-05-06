@@ -1,96 +1,57 @@
-
 <?php
-include("admin_protect.php");
-include("admin_check.php");
+session_start();
 include("../config.php");
+include("../admin_protect.php");
 include("../header.php");
 
-// Mitu rida korraga
-$per_page = 50;
-
-// Praegune leht
-$page = isset($_GET["page"]) ? max(1, intval($_GET["page"])) : 1;
-
-// Mitme rea vahele jätmine
-$start = ($page - 1) * $per_page;
-
-// Kokku autode arv
-$total_query = mysqli_query($yhendus, "SELECT COUNT(*) AS total FROM cars");
-$total_rows = mysqli_fetch_assoc($total_query)["total"];
-
-// Lehekülgede arv
-$total_pages = ceil($total_rows / $per_page);
-
-// Võtame 50 rida
-$paring = "SELECT * FROM cars ORDER BY id DESC LIMIT $start, $per_page";
-$valjund = mysqli_query($yhendus, $paring);
+// Võtame autod
+$paring = mysqli_query($yhendus, "SELECT * FROM cars");
 ?>
 
-<div class="container mt-5">
-    <h2 class="mb-4">Autode haldus</h2>
+<div class="container mt-4">
+    <h1 class="mb-4">Autode haldus</h1>
 
-    <a href="lisa.php" class="btn btn-success mb-3">Lisa uus auto</a>
+    <a href="add_car.php" class="btn btn-success mb-3">Lisa uus auto</a>
 
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Mark</th>
-                <th>Mudel</th>
-                <th>Mootor</th>
-                <th>Kütus</th>
-                <th>Hind</th>
-                <th>Tegevused</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php while ($rida = mysqli_fetch_assoc($valjund)): ?>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-dark">
                 <tr>
-                    <td><?php echo $rida["id"]; ?></td>
-                    <td><?php echo $rida["mark"]; ?></td>
-                    <td><?php echo $rida["model"]; ?></td>
-                    <td><?php echo $rida["engine"]; ?></td>
-                    <td><?php echo $rida["fuel"]; ?></td>
-                    <td><?php echo $rida["price"]; ?> €</td>
-                    <td>
-                        <a href="muuda.php?id=<?php echo $rida['id']; ?>" class="btn btn-primary btn-sm">Muuda</a>
-                        <a href="kustuta.php?id=<?php echo $rida['id']; ?>" class="btn btn-danger btn-sm"
-                           onclick="return confirm('Kas oled kindel, et soovid kustutada?');">
-                           Kustuta
-                        </a>
-                    </td>
+                    <th>ID</th>
+                    <th>Mark</th>
+                    <th>Mudel</th>
+                    <th>Mootor</th>
+                    <th>Kütus</th>
+                    <th>Hind (€)</th>
+                    <th>Staatus</th>
+                    <th>Tegevused</th>
                 </tr>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
-
-    <!-- PAGINATION -->
-    <nav>
-        <ul class="pagination">
-
-            <!-- Eelmine -->
-            <li class="page-item <?php if ($page <= 1) echo 'disabled'; ?>">
-                <a class="page-link" href="?page=<?php echo $page - 1; ?>">Eelmine</a>
-            </li>
-
-            <!-- Lehekülje numbrid -->
-            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                <li class="page-item <?php if ($i == $page) echo 'active'; ?>">
-                    <a class="page-link" href="?page=<?php echo $i; ?>">
-                        <?php echo $i; ?>
-                    </a>
-                </li>
-            <?php endfor; ?>
-
-            <!-- Järgmine -->
-            <li class="page-item <?php if ($page >= $total_pages) echo 'disabled'; ?>">
-                <a class="page-link" href="?page=<?php echo $page + 1; ?>">Järgmine</a>
-            </li>
-
-        </ul>
-    </nav>
-
+            </thead>
+            <tbody>
+                <?php while ($r = mysqli_fetch_assoc($paring)): ?>
+                    <tr>
+                        <td><?php echo $r["id"]; ?></td>
+                        <td><?php echo htmlspecialchars($r["mark"]); ?></td>
+                        <td><?php echo htmlspecialchars($r["model"]); ?></td>
+                        <td><?php echo htmlspecialchars($r["engine"]); ?></td>
+                        <td><?php echo htmlspecialchars($r["fuel"]); ?></td>
+                        <td><?php echo htmlspecialchars($r["price"]); ?></td>
+                        <td><?php echo htmlspecialchars($r["status"]); ?></td>
+                        <td>
+                            <a href="muuda.php?id=<?php echo $r['id']; ?>" class="btn btn-sm btn-primary">Muuda</a>
+                            <a href="lisa.php?id=<?php echo $r['id']; ?>" class="btn btn-sm btn-primary">Lisa</a>
+                            <a href="kustuta.php?id=<?php echo $r['id']; ?>" class="btn btn-sm btn-danger"
+                               onclick="return confirm('Kas oled kindel, et soovid kustutada?');">
+                                Kustuta
+                            </a>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
