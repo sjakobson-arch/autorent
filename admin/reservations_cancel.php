@@ -1,23 +1,40 @@
-
 <?php
-include("admin_protect.php");
-include("admin_check.php");
+session_start();
 include("../config.php");
+include("../admin_protect.php");
+include("../header.php");
 
 if (!isset($_GET["id"])) {
-    die("ID puudub");
+    echo "Broneeringu ID puudub.";
+    exit;
 }
 
 $id = intval($_GET["id"]);
 
-// Kontrollime, kas broneering eksisteerib
-$check = mysqli_query($yhendus, "SELECT id FROM reservations WHERE id=$id");
-if (mysqli_num_rows($check) === 0) {
-    die("Broneeringut ei leitud");
+// Kui admin kinnitab tühistamise
+if (isset($_POST["confirm"])) {
+
+    $stmt = mysqli_prepare($yhendus, "UPDATE reservations SET status='cancelled' WHERE id=?");
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
+
+    header("Location: reservations.php");
+    exit;
 }
+?>
 
-// Tühistame broneeringu
-mysqli_query($yhendus, "UPDATE reservations SET status='cancelled' WHERE id=$id");
+<div class="container mt-4">
+    <div class="card shadow-sm p-4">
+        <h3 class="mb-3">Tühista broneering</h3>
+        <p>Kas oled kindel, et soovid selle broneeringu tühistada?</p>
 
-header("Location: reservations.php");
-exit();
+        <form method="POST" class="d-flex gap-2">
+            <button name="confirm" class="btn btn-danger">Tühista</button>
+            <a href="reservations.php" class="btn btn-secondary">Tagasi</a>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
