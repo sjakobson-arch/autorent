@@ -19,7 +19,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         INSERT INTO cars (mark, model, engine, fuel, price, status)
         VALUES (?, ?, ?, ?, ?, ?)
     ");
-    mysqli_stmt_bind_param($stmt, "ssssds", $mark, $model, $engine, $fuel, $price, $status);
+    mysqli_stmt_bind_param($stmt, "ssssds", 
+        $mark, 
+        $model, 
+        $engine, 
+        $fuel, 
+        $price, 
+        $status
+    );
+
     mysqli_stmt_execute($stmt);
 
     header("Location: cars.php");
