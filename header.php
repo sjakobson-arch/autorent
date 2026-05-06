@@ -5,7 +5,6 @@
     <title>Autorent</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -13,6 +12,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
     <div class="container">
 
+        <!-- Avalehe link (absoluutne tee) -->
         <a class="navbar-brand" href="/index.php">Autorent</a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
@@ -37,7 +37,7 @@
 
             </ul>
 
-            <!-- Otsinguriba -->
+            <!-- Otsing -->
             <form class="d-flex position-relative me-3" method="GET" action="/index.php" autocomplete="off">
                 <input id="searchInput" class="form-control" type="search" name="otsi" placeholder="Otsi...">
                 <div id="searchResults" class="list-group position-absolute w-100" style="z-index: 1000;"></div>
