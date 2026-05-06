@@ -1,87 +1,81 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
+session_start();
 include("config.php");
 
 $vead = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $first_name = trim($_POST["first_name"]);
-    $last_name = trim($_POST["last_name"]);
+    $first = trim($_POST["first_name"]);
+    $last = trim($_POST["last_name"]);
     $email = trim($_POST["email"]);
     $password = $_POST["password"];
-    $password2 = $_POST["password2"];
+    $confirm = $_POST["confirm_password"];
 
-    if ($password !== $password2) {
-        $vead = "Paroolid ei kattu.";
+    if ($password !== $confirm) {
+        $vead = "Paroolid ei ühti.";
     } else {
 
-        // Kontroll: kas email on juba kasutusel
-        $paring = "SELECT * FROM users WHERE email='$email'";
-        $valjund = mysqli_query($yhendus, $paring);
+        $hash = password_hash($password, PASSWORD_DEFAULT);
 
-        if (mysqli_num_rows($valjund) > 0) {
-            $vead = "Selline email on juba registreeritud.";
-        } else {
+        $stmt = mysqli_prepare($yhendus, "
+            INSERT INTO users (first_name, last_name, email, password_hash, role)
+            VALUES (?, ?, ?, ?, 'user')
+        ");
+        mysqli_stmt_bind_param($stmt, "ssss", $first, $last, $email, $hash);
+        mysqli_stmt_execute($stmt);
 
-            // Hashime parooli
-            $hashed = password_hash($password, PASSWORD_DEFAULT);
-
-            // ÕIGE INSERT tabeli struktuuri järgi
-            $paring = "INSERT INTO users (role, first_name, last_name, email, password_hash)
-                       VALUES ('customer', '$first_name', '$last_name', '$email', '$hashed')";
-
-            mysqli_query($yhendus, $paring);
-
-            header("Location: login.php");
-            exit();
-        }
+        header("Location: login.php");
+        exit;
     }
 }
+
+include("header.php");
 ?>
 
-<?php include("header.php"); ?>
+<div class="container" style="max-width: 500px;">
+    <div class="card shadow-sm p-4">
 
-<div class="container mt-5" style="max-width: 500px;">
-    <h2 class="mb-4">Registreeru</h2>
+        <h3 class="mb-3 text-center">Registreeru</h3>
 
-    <?php if (!empty($vead)): ?>
-        <div class="alert alert-danger"><?php echo $vead; ?></div>
-    <?php endif; ?>
+        <?php if (!empty($vead)): ?>
+            <div class="alert alert-danger"><?php echo $vead; ?></div>
+        <?php endif; ?>
 
-    <form method="POST">
+        <form method="POST">
 
-        <div class="mb-3">
-            <label class="form-label">Eesnimi</label>
-            <input type="text" name="first_name" class="form-control" required>
-        </div>
+            <div class="mb-3">
+                <label class="form-label">Eesnimi</label>
+                <input type="text" name="first_name" class="form-control" required>
+            </div>
 
-        <div class="mb-3">
-            <label class="form-label">Perekonnanimi</label>
-            <input type="text" name="last_name" class="form-control" required>
-        </div>
+            <div class="mb-3">
+                <label class="form-label">Perekonnanimi</label>
+                <input type="text" name="last_name" class="form-control" required>
+            </div>
 
-        <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input type="email" name="email" class="form-control" required>
-        </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" required>
+            </div>
 
-        <div class="mb-3">
-            <label class="form-label">Parool</label>
-            <input type="password" name="password" class="form-control" required>
-        </div>
+            <div class="mb-3">
+                <label class="form-label">Parool</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
 
-        <div class="mb-3">
-            <label class="form-label">Korda parooli</label>
-            <input type="password" name="password2" class="form-control" required>
-        </div>
+            <div class="mb-3">
+                <label class="form-label">Korda parooli</label>
+                <input type="password" name="confirm_password" class="form-control" required>
+            </div>
 
-        <button type="submit" class="btn btn-success w-100">Registreeru</button>
-    </form>
+            <button class="btn btn-primary w-100">Registreeru</button>
+
+        </form>
+
+    </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
