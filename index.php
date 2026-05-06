@@ -3,7 +3,8 @@ session_start();
 include("config.php");
 include("header.php");
 
-$paring = mysqli_query($yhendus, "SELECT * FROM cars");
+// Võtame ainult 6 autot
+$paring = mysqli_query($yhendus, "SELECT * FROM cars LIMIT 6");
 ?>
 
 <div class="container">

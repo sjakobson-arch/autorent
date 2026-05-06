@@ -23,14 +23,6 @@
 
             <ul class="navbar-nav me-auto">
 
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php">Avaleht</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="availability.php">Saadavus</a>
-                </li>
-
                 <?php if (isset($_SESSION["user_id"]) && ($_SESSION["role"] ?? "") !== "admin"): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="minu_rendid.php">Minu rendid</a>
