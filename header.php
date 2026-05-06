@@ -37,6 +37,12 @@
 
             </ul>
 
+            <!--  OTSINGURIBA -->
+            <form class="d-flex position-relative me-3" method="GET" action="index.php" autocomplete="off">
+                <input id="searchInput" class="form-control" type="search" name="otsi" placeholder="Otsi...">
+                <div id="searchResults" class="list-group position-absolute w-100" style="z-index: 1000;"></div>
+            </form>
+
             <ul class="navbar-nav ms-auto">
 
                 <?php if (isset($_SESSION["user_id"])): ?>
@@ -62,3 +68,33 @@
         </div>
     </div>
 </nav>
+
+<!--  AUTOCOMPLETE SCRIPT -->
+<script>
+document.getElementById("searchInput").addEventListener("input", function() {
+    let query = this.value;
+
+    if (query.length < 1) {
+        document.getElementById("searchResults").innerHTML = "";
+        return;
+    }
+
+    fetch("search_autocomplete.php?term=" + query)
+        .then(response => response.json())
+        .then(data => {
+            let results = document.getElementById("searchResults");
+            results.innerHTML = "";
+
+            data.forEach(item => {
+                let div = document.createElement("a");
+                div.classList.add("list-group-item", "list-group-item-action");
+                div.textContent = item;
+                div.onclick = () => {
+                    document.getElementById("searchInput").value = item;
+                    results.innerHTML = "";
+                };
+                results.appendChild(div);
+            });
+        });
+});
+</script>
