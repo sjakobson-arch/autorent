@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $stmt = mysqli_prepare($yhendus, "
             INSERT INTO users (first_name, last_name, email, password_hash, role)
-            VALUES (?, ?, ?, ?, 'user')
+            VALUES (?, ?, ?, ?, 'customer')
         ");
         mysqli_stmt_bind_param($stmt, "ssss", $first, $last, $email, $hash);
         mysqli_stmt_execute($stmt);
