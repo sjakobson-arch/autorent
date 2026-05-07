@@ -7,8 +7,21 @@ services:
       - "8080:80"
     volumes:
       - ./:/var/www/html
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_NAME: autorent
+      DB_USER: autorent
+      DB_PASSWORD: Parool123!
+
+  db:
+    image: mariadb:11
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
       MYSQL_DATABASE: autorent
       MYSQL_USER: autorent
       MYSQL_PASSWORD: Parool123!
+    volumes:
+      - ./db/autorent_dump.sql:/docker-entrypoint-initdb.d/autorent_dump.sql

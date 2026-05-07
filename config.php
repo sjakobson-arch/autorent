@@ -1,12 +1,14 @@
 <?php
-$server = "localhost";
-$kasutaja = "autorent";
-$parool = "Parool123!";
-$andmebaas = "autorent";
 
-$yhendus = new mysqli($server, $kasutaja, $parool, $andmebaas);
+// Kui Dockeris, siis DB_HOST= db
+$host = getenv('DB_HOST') ?: 'localhost';
+$db   = getenv('DB_NAME') ?: 'autorent';
+$user = getenv('DB_USER') ?: 'root';
+$pass = getenv('DB_PASSWORD') ?: '';
 
-if ($yhendus->connect_error) {
-    die("Andmebaasi ühendus ebaõnnestus: " . $yhendus->connect_error);
+$mysqli = new mysqli($host, $user, $pass, $db);
+
+if ($mysqli->connect_error) {
+    die("Database connection failed: " . $mysqli->connect_error);
 }
 ?>
