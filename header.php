@@ -54,7 +54,7 @@ $base = $inAdmin ? '..' : '.';
                 <?php if (isset($_SESSION["user_id"])): ?>
                     <li class="nav-item">
                         <span class="navbar-text me-2">
-                            Tere, <?php echo htmlspecialchars($_SESSION["first_name"] ?? "kasutaja"); ?>
+                            Tere tulemast! <?php echo htmlspecialchars($_SESSION["first_name"] ?? "kasutaja"); ?>
                         </span>
                     </li>
                     <li class="nav-item">
