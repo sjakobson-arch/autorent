@@ -1,5 +1,5 @@
 <?php
-ini_set('session.cookie_httponly', 1);
+
 // Vaikimisi väärtused (Ubuntu server / tavaline install)
 $db_server    = 'localhost';
 $db_andmebaas = 'autorent';
