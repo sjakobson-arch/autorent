@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         INSERT INTO reservations (car_id, user_id, start_date, end_date, total_price, status)
         VALUES (?, ?, ?, ?, ?, 'pending')
     ");
-    mysqli_stmt_bind_param($stmt2, "i ss sd", $car_id, $user_id, $start, $end, $total_price);
+    mysqli_stmt_bind_param($stmt2, "iissd", $car_id, $user_id, $start, $end, $total_price);
     mysqli_stmt_execute($stmt2);
 
     echo "<div class='container mt-4'>
