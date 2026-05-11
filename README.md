@@ -24,6 +24,14 @@ Lähme nüüd edasi veebi autorent juurde. Veebi pääsen serveri-ip/autorent.
 Saabun avalehele, kus näen pakutavaid autosi.
 Saan küll autosid lähemalt vaadata, kuid rentida mitte. Selleks on vaja kasutaja teha.
 
+
+
+
+
+
+
+
+
 <img width="1000" height="400" alt="Kuvatõmmis 2026-05-11 135830" src="https://github.com/user-attachments/assets/d1849603-c8a5-4270-b00f-f0671d2b1625" />
 
 
@@ -33,9 +41,19 @@ Saan küll autosid lähemalt vaadata, kuid rentida mitte. Selleks on vaja kasuta
 
 
 
+
+
+
 Vajutan nupule registreeri. Loon kasutaja ja voilaa. 
 Rendin auto kalendri järgi. Peale rentimist näen koheselt enda renditud auto väljundit.
 Tavakasutajana rohkem teha ei saa.
+
+
+
+
+
+
+
 
 
 <img width="1000" height="400" alt="Kuvatõmmis 2026-05-11 135908" src="https://github.com/user-attachments/assets/96dc0be5-b991-41d0-a5f2-e97296067c9b" />
@@ -51,9 +69,21 @@ Tavakasutajana rohkem teha ei saa.
 
 
 
+
+
+
+
+
 Kui olen admin, siis on mul eraldi admini töölaud, kust on võimalik autode tabelit ning broneeringuid hallata.
 Tabelis saan lisada, muuta ja kustutada autosid.
 Broneeringuid saan kinnitada ja tühistada.
+
+
+
+
+
+
+
 
 
 
