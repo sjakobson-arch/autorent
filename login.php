@@ -1,6 +1,9 @@
 <?php
 session_start();
+session_regenerate_id(true);
 include("config.php");
+
+
 
 $vead = "";
 
@@ -23,6 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION["role"] = $kasutaja["role"];
             $_SESSION["first_name"] = $kasutaja["first_name"];
             $_SESSION["last_name"] = $kasutaja["last_name"];
+
+            session_regenerate_id(true);
 
             header("Location: index.php");
             exit;
