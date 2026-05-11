@@ -41,12 +41,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     mysqli_stmt_bind_param($stmt2, "iissd", $car_id, $user_id, $start, $end, $total_price);
     mysqli_stmt_execute($stmt2);
 
-    echo "<div class='container mt-4'>
-            <div class='alert alert-success'>
-                Broneering salvestatud! Leiad selle lehelt <a href='minu_rendid.php'>Minu rendid</a>.
-            </div>
-          </div>";
+    header("Location: minu_rendid.php");
     exit;
+
 }
 
 echo "<div class='container mt-4'><div class='alert alert-danger'>Vigane päring.</div></div>";
