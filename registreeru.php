@@ -1,11 +1,6 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 session_start();
 require_once "config.php";
-
-
 
 $errors = [];
 
@@ -15,7 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = trim($_POST["password"]);
     $password2 = trim($_POST["password2"]);
 
-    // Kontrollid
     if (empty($email)) $errors[] = "Email on kohustuslik.";
     if (empty($password)) $errors[] = "Parool on kohustuslik.";
     if ($password !== $password2) $errors[] = "Paroolid ei ühti.";
@@ -23,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (empty($errors)) {
 
         // Kontrollime, kas email juba olemas
-        $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+        $stmt = $yhendus->prepare("SELECT id FROM users WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->store_result();
@@ -34,11 +28,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $hashed = password_hash($password, PASSWORD_DEFAULT);
             $role = "customer";
-
-            // Kuna first_name, last_name ja phone pole enam kasutusel, paneme need tühjaks
             $empty = "";
 
-            $stmt = $conn->prepare("
+            $stmt = $yhendus->prepare("
                 INSERT INTO users (role, first_name, last_name, email, phone, password_hash)
                 VALUES (?, ?, ?, ?, ?, ?)
             ");
@@ -89,7 +81,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <button type="submit" class="btn btn-primary">Registreeru</button>
     </form>
 </div>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
